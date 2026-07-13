@@ -5,7 +5,7 @@
 - Thomas Howes
 
 ## Class Link
-[Course link here - add your course/section link]
+https://johnguerra.co/classes/webDevelopment_online_summer_2026/
 
 ## Project Objective
 LinkUp is a targeted matching app for jobseekers and employers. Instead of open
