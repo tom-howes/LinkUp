@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import "./MatchCard.css";
 
-function MatchCard({ match, viewerRole, onUpdate, onDelete }) {
+function MatchCard({ match, viewerRole, onUpdate, onDelete, onOpenChat }) {
   const posting = match.posting || {};
   const seeker = match.seeker || {};
 
@@ -29,6 +29,11 @@ function MatchCard({ match, viewerRole, onUpdate, onDelete }) {
         {match.status !== "unlocked" && (
           <button type="button" onClick={() => onUpdate(match._id, "unlocked")}>
             Unlock chat
+          </button>
+        )}
+        {match.status === "unlocked" && onOpenChat && (
+          <button type="button" onClick={() => onOpenChat(match._id)}>
+            Open chat
           </button>
         )}
         {match.status !== "dismissed" && (
@@ -64,6 +69,7 @@ MatchCard.propTypes = {
   viewerRole: PropTypes.string.isRequired,
   onUpdate: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired,
+  onOpenChat: PropTypes.func,
 };
 
 export default MatchCard;

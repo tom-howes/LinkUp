@@ -1,0 +1,110 @@
+.posting-list {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.posting-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.posting-list-header button {
+  border: none;
+  background: #2d6cdf;
+  color: #fff;
+  padding: 0.5rem 0.9rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.posting-search {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.posting-search input {
+  flex: 1;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.posting-search button {
+  border: none;
+  background: #2d6cdf;
+  color: #fff;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.posting-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.posting-card.status-closed {
+  opacity: 0.6;
+}
+
+.posting-card-main {
+  flex: 1;
+}
+
+.posting-card-main h3 {
+  margin: 0 0 0.25rem;
+}
+
+.posting-meta {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.posting-skills {
+  margin: 0.5rem 0 0.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.posting-description {
+  margin: 0.25rem 0 0;
+  font-size: 0.9rem;
+  color: #333;
+}
+
+.posting-card-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.posting-card-actions button {
+  padding: 0.4rem 0.7rem;
+  border: none;
+  background: #2d6cdf;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.posting-card-actions button.danger {
+  background: #c0392b;
+}
+
+.posting-list-error {
+  color: #c0392b;
+  font-size: 0.9rem;
+}
+
+.posting-list-empty {
+  color: #666;
+}

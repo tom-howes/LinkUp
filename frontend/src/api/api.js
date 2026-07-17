@@ -29,4 +29,36 @@ export const api = {
   updateMatch: (id, body) =>
     request(`/api/matches/${id}`, { method: "PUT", body: JSON.stringify(body) }),
   deleteMatch: (id) => request(`/api/matches/${id}`, { method: "DELETE" }),
+
+  // Postings (Thomas)
+  getPostings: (params = {}) => {
+    const qs = new URLSearchParams(
+      Object.fromEntries(
+        Object.entries(params).filter(([, v]) => v !== "" && v != null)
+      )
+    ).toString();
+    return request(`/api/postings${qs ? `?${qs}` : ""}`);
+  },
+  getMyPostings: () => request("/api/postings/mine"),
+  getPosting: (id) => request(`/api/postings/${id}`),
+  createPosting: (body) =>
+    request("/api/postings", { method: "POST", body: JSON.stringify(body) }),
+  updatePosting: (id, body) =>
+    request(`/api/postings/${id}`, { method: "PUT", body: JSON.stringify(body) }),
+  deletePosting: (id) => request(`/api/postings/${id}`, { method: "DELETE" }),
+
+  // Messages (Thomas)
+  getMessages: (matchId) => request(`/api/messages/${matchId}`),
+  sendMessage: (matchId, text) =>
+    request(`/api/messages/${matchId}`, {
+      method: "POST",
+      body: JSON.stringify({ text }),
+    }),
+  updateMessage: (id, text) =>
+    request(`/api/messages/message/${id}`, {
+      method: "PUT",
+      body: JSON.stringify({ text }),
+    }),
+  deleteMessage: (id) =>
+    request(`/api/messages/message/${id}`, { method: "DELETE" }),
 };

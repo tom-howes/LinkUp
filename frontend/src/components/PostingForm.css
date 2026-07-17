@@ -1,0 +1,100 @@
+.posting-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  margin-bottom: 1.5rem;
+}
+
+.posting-form h3 {
+  margin: 0 0 0.5rem;
+}
+
+.posting-form label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.posting-form input,
+.posting-form textarea {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font: inherit;
+}
+
+.posting-skills-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 0.25rem;
+}
+
+.posting-skills-header button {
+  border: none;
+  background: #eee;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.posting-skills-header button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.posting-skill-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.posting-skill-row input {
+  flex: 1;
+}
+
+.posting-skill-remove {
+  border: none;
+  background: #eee;
+  border-radius: 4px;
+  padding: 0 0.7rem;
+  cursor: pointer;
+}
+
+.posting-form-actions {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.posting-form-save {
+  padding: 0.6rem 1rem;
+  border: none;
+  background: #2d6cdf;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.posting-form-save:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.posting-form-cancel {
+  padding: 0.6rem 1rem;
+  border: 1px solid #ccc;
+  background: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.posting-form-error {
+  color: #c0392b;
+  font-size: 0.85rem;
+  margin: 0;
+}

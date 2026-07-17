@@ -4,7 +4,7 @@ import { api } from "../api/api";
 import MatchCard from "./MatchCard";
 import "./MatchList.css";
 
-function MatchList({ user }) {
+function MatchList({ user, onOpenChat }) {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -80,6 +80,7 @@ function MatchList({ user }) {
             viewerRole={user.role}
             onUpdate={handleUpdate}
             onDelete={handleDelete}
+            onOpenChat={onOpenChat}
           />
         ))
       )}
@@ -91,6 +92,7 @@ MatchList.propTypes = {
   user: PropTypes.shape({
     role: PropTypes.string.isRequired,
   }).isRequired,
+  onOpenChat: PropTypes.func,
 };
 
 export default MatchList;
