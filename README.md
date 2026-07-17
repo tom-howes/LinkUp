@@ -17,10 +17,10 @@ seeker's title and skills line up with a posting, LinkUp surfaces it as a
 match and unlocks a private chat between the two.
 
 ## Screenshot
-_Add a screenshot of the running app here before submission._
+![LinkUp screenshot](images/linkup-screenshot.png)
 
 ## Tech Stack
-- Frontend: React (hooks, client-side rendering), Vite
+- Frontend: React (hooks, client-side rendering), Create React App
 - Backend: Node.js + Express
 - Database: MongoDB (native Node.js driver, no Mongoose)
 - Auth: Passport (local strategy) + express-session
@@ -30,17 +30,29 @@ _Add a screenshot of the running app here before submission._
 ```
 linkup/
   backend/     Express API, Mongo connection, Passport auth, routes, seed script
-  frontend/    React app (Vite, hooks, one component per file + matching CSS)
+  frontend/    React app (CRA, hooks, one component per file + matching CSS)
 ```
 
 ## Instructions to Build
+
+### 0. Prerequisites - MongoDB on `localhost:27017`
+The backend needs a running MongoDB. Pick one:
+
+- **Docker (recommended):**
+  ```bash
+  docker run -d --name linkup-mongo -p 27017:27017 -v linkup-mongo-data:/data/db mongo:7
+  ```
+  Later just `docker start linkup-mongo` / `docker stop linkup-mongo`.
+- **Native install:** MongoDB Community Server (installs as a service on 27017).
+- **Cloud:** a free MongoDB Atlas cluster - use its `mongodb+srv://...` string as
+  `MONGO_URI` instead of the local one.
 
 ### 1. Backend
 ```bash
 cd backend
 npm install
-cp .env.example .env   # fill in your own Mongo URI and session secret
-npm run seed            # populates 1k+ synthetic records
+cp .env.example .env   # defaults work for local Mongo; set a long random SESSION_SECRET
+npm run seed            # populates 5k+ synthetic records
 npm run dev              # starts API on http://localhost:5000
 ```
 
@@ -48,11 +60,12 @@ npm run dev              # starts API on http://localhost:5000
 ```bash
 cd frontend
 npm install
-npm run dev              # starts Vite dev server on http://localhost:5173
+npm start                # starts CRA dev server on http://localhost:3000
 ```
 
 The frontend expects the backend running at `http://localhost:5000` (see
-`frontend/src/api/api.js`).
+`frontend/src/api/api.js`). Open the app at http://localhost:3000. Every seeded
+user's password is `password123`, or register a fresh account.
 
 ## Environment Variables
 See `backend/.env.example`. Never commit a real `.env` file - it is already
