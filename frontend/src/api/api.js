@@ -1,4 +1,7 @@
-const BASE = process.env.REACT_APP_API_URL || "http://localhost:5000";
+// Relative by default: in dev CRA proxies "/api" to the backend (see the
+// "proxy" field in package.json); in production Express serves this app from
+// the same origin. Override with REACT_APP_API_URL for a split deployment.
+const BASE = process.env.REACT_APP_API_URL || "";
 
 async function request(path, options = {}) {
   const res = await fetch(`${BASE}${path}`, {
@@ -33,9 +36,7 @@ export const api = {
   // Postings (Thomas)
   getPostings: (params = {}) => {
     const qs = new URLSearchParams(
-      Object.fromEntries(
-        Object.entries(params).filter(([, v]) => v !== "" && v != null)
-      )
+      Object.fromEntries(Object.entries(params).filter(([, v]) => v !== "" && v != null))
     ).toString();
     return request(`/api/postings${qs ? `?${qs}` : ""}`);
   },
@@ -59,6 +60,5 @@ export const api = {
       method: "PUT",
       body: JSON.stringify({ text }),
     }),
-  deleteMessage: (id) =>
-    request(`/api/messages/message/${id}`, { method: "DELETE" }),
+  deleteMessage: (id) => request(`/api/messages/message/${id}`, { method: "DELETE" }),
 };

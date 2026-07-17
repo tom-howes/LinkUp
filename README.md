@@ -63,17 +63,39 @@ npm install
 npm start                # starts CRA dev server on http://localhost:3000
 ```
 
-The frontend expects the backend running at `http://localhost:5000` (see
-`frontend/src/api/api.js`). Open the app at http://localhost:3000. Every seeded
-user's password is `password123`, or register a fresh account.
+In development the CRA dev server proxies `/api` requests to the backend on
+`http://localhost:5000` (see the `proxy` field in `frontend/package.json`), so
+open the app at http://localhost:3000. Every seeded user's password is
+`password123`, or register a fresh account.
 
 ## Environment Variables
 See `backend/.env.example`. Never commit a real `.env` file - it is already
 listed in `.gitignore`.
 
 ## Deployment
-_Add your deployed URL(s) here (e.g. Render/Railway for backend, Netlify/Vercel
-for frontend) once deployed._
+Deployed as a **single service**: in production Express serves the built React
+app from the same origin (see `server.js`), so there is no cross-origin cookie
+or CORS setup to manage. Hosted on Render with MongoDB Atlas.
+
+**Live URL:** _add your Render URL here once deployed._
+
+### Steps
+1. **Database - MongoDB Atlas:** create a free M0 cluster, add a DB user, and
+   allow access from anywhere (`0.0.0.0/0`). Copy the `mongodb+srv://...` URI.
+2. **Seed the cloud DB** (once): set `MONGO_URI` to the Atlas URI in your local
+   `backend/.env`, run `npm run seed`, then switch `.env` back for local dev.
+3. **Render web service:** New + > Web Service, connect this repo, and set:
+   - **Build Command:**
+     `cd frontend && npm install && npm run build && cd ../backend && npm install`
+   - **Start Command:** `cd backend && npm start`
+   - **Environment variables:**
+     - `NODE_ENV=production`
+     - `MONGO_URI=<your Atlas URI>`
+     - `MONGO_DB_NAME=linkup`
+     - `SESSION_SECRET=<a long random string>`
+
+   (`PORT` is provided by Render automatically; secure session cookies work via
+   `trust proxy`.)
 
 ## AI Usage Disclosure
 AI tools were used for brainstorming, scaffolding boilerplate, debugging help,

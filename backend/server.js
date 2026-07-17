@@ -1,4 +1,5 @@
 require("dotenv").config();
+const path = require("path");
 const express = require("express");
 const session = require("express-session");
 const passport = require("passport");
@@ -14,6 +15,10 @@ const messageRoutes = require("./routes/messages");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
+const isProd = process.env.NODE_ENV === "production";
+
+// Trust the hosting proxy (e.g. Render) so secure cookies work behind HTTPS.
+app.set("trust proxy", 1);
 
 app.use(express.json());
 
@@ -37,6 +42,8 @@ app.use(
     saveUninitialized: false,
     cookie: {
       httpOnly: true,
+      secure: isProd,
+      sameSite: "lax",
       maxAge: 1000 * 60 * 60 * 24 * 7,
     },
   })
@@ -54,6 +61,17 @@ app.use("/api/messages", messageRoutes);
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok" });
 });
+
+// In production, serve the built React app from the same origin.
+if (isProd) {
+  const buildDir = path.join(__dirname, "..", "frontend", "build");
+  app.use(express.static(buildDir));
+  // Any non-API route falls back to index.html (client-side app).
+  app.get("*", (req, res, next) => {
+    if (req.path.startsWith("/api")) return next();
+    res.sendFile(path.join(buildDir, "index.html"));
+  });
+}
 
 async function start() {
   try {
