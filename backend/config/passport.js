@@ -1,20 +1,43 @@
 const passport = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
-// const bcrypt = require("bcryptjs");
-// const { ObjectId } = require("mongodb");
-// const { getDB } = require("./db");
+const bcrypt = require("bcryptjs");
+const { ObjectId } = require("mongodb");
+const { getDB } = require("./db");
 
-/**
- * TODO: Configure Passport's local strategy (email/password login)
- * and the serialize/deserialize hooks that keep a user's session alive.
- *
- * - LocalStrategy should look up the user by email, compare the hashed
- *   password with bcrypt, and call done(null, user) on success.
- * - serializeUser should store user._id in the session.
- * - deserializeUser should look the user back up by _id.
- */
 function configurePassport() {
-  // TODO
+  passport.use(
+    new LocalStrategy(
+      { usernameField: "email" },
+      async (email, password, done) => {
+        try {
+          const db = getDB();
+          const user = await db.collection("users").findOne({ email });
+          if (!user) return done(null, false, { message: "Invalid credentials" });
+          const ok = await bcrypt.compare(password, user.password);
+          if (!ok) return done(null, false, { message: "Invalid credentials" });
+          return done(null, user);
+        } catch (err) {
+          return done(err);
+        }
+      }
+    )
+  );
+
+  passport.serializeUser((user, done) => {
+    done(null, user._id.toString());
+  });
+
+  passport.deserializeUser(async (id, done) => {
+    try {
+      const db = getDB();
+      const user = await db
+        .collection("users")
+        .findOne({ _id: new ObjectId(id) });
+      done(null, user || false);
+    } catch (err) {
+      done(err);
+    }
+  });
 }
 
 module.exports = { configurePassport };

@@ -5,18 +5,18 @@ let db;
 
 /**
  * Connect to MongoDB using the native driver (no Mongoose).
- * TODO: connect using process.env.MONGO_URI / MONGO_DB_NAME,
- * cache the db instance, and return it.
  */
 async function connectDB() {
-  // TODO
+  if (db) return db;
+  client = new MongoClient(process.env.MONGO_URI);
+  await client.connect();
+  db = client.db(process.env.MONGO_DB_NAME);
+  return db;
 }
 
-/**
- * TODO: return the cached db instance (throw if not yet connected).
- */
 function getDB() {
-  // TODO
+  if (!db) throw new Error("DB not connected. Call connectDB() first.");
+  return db;
 }
 
 module.exports = { connectDB, getDB };

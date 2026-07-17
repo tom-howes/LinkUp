@@ -17,12 +17,33 @@ const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 
-// TODO: manual CORS headers here if frontend runs on a different port
-// (remember: the `cors` npm package is not allowed).
+// manual CORS headers (cors package not allowed)
+app.use((req, res, next) => {
+  res.header(
+    "Access-Control-Allow-Origin",
+    process.env.CLIENT_ORIGIN || "http://localhost:3000"
+  );
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+  res.header("Access-Control-Allow-Headers", "Content-Type");
+  if (req.method === "OPTIONS") return res.sendStatus(204);
+  next();
+});
 
-// TODO: app.use(session({ ... })) using process.env.SESSION_SECRET
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || "dev-secret",
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      httpOnly: true,
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+    },
+  })
+);
 
-// TODO: app.use(passport.initialize()) and app.use(passport.session())
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
@@ -35,7 +56,14 @@ app.get("/api/health", (req, res) => {
 });
 
 async function start() {
-  // TODO: await connectDB(), call configurePassport(), then app.listen(PORT)
+  try {
+    await connectDB();
+    configurePassport();
+    app.listen(PORT, () => console.log(`Server on ${PORT}`));
+  } catch (err) {
+    console.error("Startup failed:", err);
+    process.exit(1);
+  }
 }
 
 start();

@@ -1,0 +1,33 @@
+.match-list {
+  max-width: 640px;
+  margin: 1.5rem auto;
+}
+
+.match-list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.match-list-header h2 {
+  margin: 0;
+}
+
+.match-list-header button {
+  padding: 0.5rem 0.9rem;
+  border: none;
+  background: #27ae60;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.match-list-empty {
+  color: #666;
+}
+
+.match-list-error {
+  color: #c0392b;
+  font-size: 0.85rem;
+}

@@ -1,0 +1,25 @@
+.skill-input {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.skill-input input {
+  flex: 1;
+  padding: 0.4rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.skill-remove {
+  padding: 0.4rem 0.7rem;
+  border: none;
+  background: #eee;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.skill-remove:hover {
+  background: #e0b4b4;
+}

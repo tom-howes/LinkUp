@@ -1,0 +1,70 @@
+.profile-editor {
+  max-width: 560px;
+  margin: 1.5rem auto;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+}
+
+.profile-editor h2 {
+  margin: 0 0 0.5rem;
+}
+
+.profile-editor label {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.profile-editor > input {
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.skills-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 0.75rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.skills-header button {
+  padding: 0.35rem 0.6rem;
+  border: none;
+  background: #2d6cdf;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.skills-header button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.profile-save {
+  margin-top: 1rem;
+  padding: 0.6rem;
+  border: none;
+  background: #27ae60;
+  color: #fff;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.profile-error {
+  color: #c0392b;
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.profile-status {
+  color: #27ae60;
+  font-size: 0.85rem;
+  margin: 0;
+}

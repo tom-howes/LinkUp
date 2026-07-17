@@ -1,9 +1,6 @@
-/**
- * TODO: block access to a route unless the request has an authenticated
- * session (req.isAuthenticated()). Otherwise respond 401.
- */
 function requireAuth(req, res, next) {
-  // TODO
+  if (req.isAuthenticated && req.isAuthenticated()) return next();
+  return res.status(401).json({ error: "Not authenticated" });
 }
 
 module.exports = { requireAuth };
