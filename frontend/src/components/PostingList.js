@@ -24,9 +24,7 @@ function PostingList({ scope }) {
     setLoading(true);
     setError("");
     try {
-      const data = isMine
-        ? await api.getMyPostings()
-        : await api.getPostings({ search });
+      const data = isMine ? await api.getMyPostings() : await api.getPostings({ search });
       setPostings(data);
     } catch (err) {
       setError(err.message);
@@ -59,9 +57,7 @@ function PostingList({ scope }) {
     try {
       const next = posting.status === "closed" ? "open" : "closed";
       const updated = await api.updatePosting(posting._id, { status: next });
-      setPostings((prev) =>
-        prev.map((p) => (p._id === posting._id ? updated : p))
-      );
+      setPostings((prev) => prev.map((p) => (p._id === posting._id ? updated : p)));
     } catch (err) {
       setError(err.message);
     }
@@ -89,10 +85,7 @@ function PostingList({ scope }) {
       </div>
 
       {isMine && creating && (
-        <PostingForm
-          onSaved={handleCreated}
-          onCancel={() => setCreating(false)}
-        />
+        <PostingForm onSaved={handleCreated} onCancel={() => setCreating(false)} />
       )}
 
       {!isMine && (
@@ -136,9 +129,7 @@ function PostingList({ scope }) {
                 <p className="posting-skills">
                   Required: {(p.requiredSkills || []).join(", ")}
                 </p>
-                {p.description && (
-                  <p className="posting-description">{p.description}</p>
-                )}
+                {p.description && <p className="posting-description">{p.description}</p>}
               </div>
 
               {isMine && (

@@ -41,11 +41,7 @@ function MatchCard({ match, viewerRole, onUpdate, onDelete, onOpenChat }) {
             Dismiss
           </button>
         )}
-        <button
-          type="button"
-          className="danger"
-          onClick={() => onDelete(match._id)}
-        >
+        <button type="button" className="danger" onClick={() => onDelete(match._id)}>
           Delete
         </button>
       </div>

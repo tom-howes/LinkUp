@@ -39,9 +39,7 @@ function MatchList({ user, onOpenChat }) {
   async function handleUpdate(id, status) {
     try {
       await api.updateMatch(id, { status });
-      setMatches((prev) =>
-        prev.map((m) => (m._id === id ? { ...m, status } : m))
-      );
+      setMatches((prev) => prev.map((m) => (m._id === id ? { ...m, status } : m)));
     } catch (err) {
       setError(err.message);
     }

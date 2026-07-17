@@ -16,11 +16,7 @@ function SkillInput({ index, skill, onChange, onRemove }) {
         value={skill.evidence}
         onChange={(e) => onChange(index, { ...skill, evidence: e.target.value })}
       />
-      <button
-        type="button"
-        className="skill-remove"
-        onClick={() => onRemove(index)}
-      >
+      <button type="button" className="skill-remove" onClick={() => onRemove(index)}>
         Remove
       </button>
     </div>

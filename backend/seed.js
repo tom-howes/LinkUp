@@ -101,7 +101,10 @@ async function seed() {
 
   const seekerDocs = seekers.map((s, i) => ({ ...s, _id: seekerIds[i] }));
 
-  const norm = (x) => String(x || "").trim().toLowerCase();
+  const norm = (x) =>
+    String(x || "")
+      .trim()
+      .toLowerCase();
 
   const matches = [];
   for (const s of seekerDocs) {
@@ -110,13 +113,8 @@ async function seed() {
       if (norm(p.title) !== norm(s.desiredTitle)) return false;
       return (p.requiredSkills || []).some((r) => sSkills.has(norm(r)));
     });
-    for (const p of faker.helpers.arrayElements(
-      eligible,
-      Math.min(eligible.length, 3)
-    )) {
-      const matched = (p.requiredSkills || [])
-        .map(norm)
-        .filter((r) => sSkills.has(r));
+    for (const p of faker.helpers.arrayElements(eligible, Math.min(eligible.length, 3))) {
+      const matched = (p.requiredSkills || []).map(norm).filter((r) => sSkills.has(r));
       matches.push({
         seekerId: s._id,
         postingId: p._id,

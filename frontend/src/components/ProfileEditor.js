@@ -60,11 +60,7 @@ function ProfileEditor({ user, onSaved }) {
 
           <div className="skills-header">
             <span>Skills (max 3)</span>
-            <button
-              type="button"
-              onClick={addSkill}
-              disabled={skills.length >= 3}
-            >
+            <button type="button" onClick={addSkill} disabled={skills.length >= 3}>
               Add skill
             </button>
           </div>

@@ -61,18 +61,10 @@ function App() {
         onLogout={handleLogout}
       />
       <main className="app-main">
-        {view === "browse" && user.role === "seeker" && (
-          <PostingList scope="browse" />
-        )}
-        {view === "postings" && user.role === "employer" && (
-          <PostingList scope="mine" />
-        )}
-        {view === "matches" && (
-          <MatchList user={user} onOpenChat={setChatMatchId} />
-        )}
-        {view === "profile" && (
-          <ProfileEditor user={user} onSaved={setUser} />
-        )}
+        {view === "browse" && user.role === "seeker" && <PostingList scope="browse" />}
+        {view === "postings" && user.role === "employer" && <PostingList scope="mine" />}
+        {view === "matches" && <MatchList user={user} onOpenChat={setChatMatchId} />}
+        {view === "profile" && <ProfileEditor user={user} onSaved={setUser} />}
       </main>
 
       {chatMatchId && (

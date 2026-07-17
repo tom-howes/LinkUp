@@ -24,9 +24,7 @@ const withPoster = [
 // Validate + clean 1-2 required skills. Returns { skills } or { error }.
 function cleanRequiredSkills(input) {
   if (!Array.isArray(input)) return { error: "requiredSkills must be an array" };
-  const skills = input
-    .map((s) => String(s || "").trim())
-    .filter((s) => s.length > 0);
+  const skills = input.map((s) => String(s || "").trim()).filter((s) => s.length > 0);
   if (skills.length < 1 || skills.length > 2) {
     return { error: "A posting needs 1 or 2 required skills" };
   }
@@ -94,10 +92,7 @@ router.get("/:id", async (req, res) => {
     const db = getDB();
     const results = await db
       .collection("postings")
-      .aggregate([
-        { $match: { _id: new ObjectId(req.params.id) } },
-        ...withPoster,
-      ])
+      .aggregate([{ $match: { _id: new ObjectId(req.params.id) } }, ...withPoster])
       .toArray();
     if (results.length === 0) return res.status(404).json({ error: "Not found" });
     res.json(results[0]);
@@ -175,12 +170,8 @@ router.put("/:id", requireAuth, async (req, res) => {
       return res.status(400).json({ error: "Nothing to update" });
     }
 
-    await db
-      .collection("postings")
-      .updateOne({ _id: posting._id }, { $set: update });
-    const fresh = await db
-      .collection("postings")
-      .findOne({ _id: posting._id });
+    await db.collection("postings").updateOne({ _id: posting._id }, { $set: update });
+    const fresh = await db.collection("postings").findOne({ _id: posting._id });
     res.json(fresh);
   } catch (err) {
     res.status(400).json({ error: "Invalid id" });

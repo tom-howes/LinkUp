@@ -65,11 +65,7 @@ function AuthForm({ onAuth }) {
       {mode === "register" && (
         <>
           <label htmlFor="auth-role">I am a</label>
-          <select
-            id="auth-role"
-            value={role}
-            onChange={(e) => setRole(e.target.value)}
-          >
+          <select id="auth-role" value={role} onChange={(e) => setRole(e.target.value)}>
             <option value="seeker">Jobseeker</option>
             <option value="employer">Employer</option>
           </select>

@@ -45,9 +45,7 @@ router.put("/me", requireAuth, async (req, res) => {
           evidence: String(s.evidence || "").trim(),
         }));
         if (clean.some((s) => !s.name || !s.evidence)) {
-          return res
-            .status(400)
-            .json({ error: "Each skill needs a name and evidence" });
+          return res.status(400).json({ error: "Each skill needs a name and evidence" });
         }
         update.skills = clean;
       }
@@ -61,9 +59,7 @@ router.put("/me", requireAuth, async (req, res) => {
       return res.status(400).json({ error: "Nothing to update" });
     }
 
-    await db
-      .collection("users")
-      .updateOne({ _id: req.user._id }, { $set: update });
+    await db.collection("users").updateOne({ _id: req.user._id }, { $set: update });
     const fresh = await db.collection("users").findOne({ _id: req.user._id });
     const { password, ...safe } = fresh;
     res.json(safe);

@@ -9,7 +9,9 @@ const router = express.Router();
 // skill overlaps with a posting's title + requiredSkills.
 
 function norm(s) {
-  return String(s || "").trim().toLowerCase();
+  return String(s || "")
+    .trim()
+    .toLowerCase();
 }
 
 // POST /api/matches/generate - recompute matches for the current seeker
@@ -124,8 +126,7 @@ router.put("/:id", requireAuth, async (req, res) => {
     if (!match) return res.status(404).json({ error: "Not found" });
 
     const isParticipant =
-      match.seekerId.equals(req.user._id) ||
-      match.posterId.equals(req.user._id);
+      match.seekerId.equals(req.user._id) || match.posterId.equals(req.user._id);
     if (!isParticipant) return res.status(403).json({ error: "Forbidden" });
 
     const allowed = ["pending", "unlocked", "dismissed"];
@@ -153,8 +154,7 @@ router.delete("/:id", requireAuth, async (req, res) => {
     if (!match) return res.status(404).json({ error: "Not found" });
 
     const isParticipant =
-      match.seekerId.equals(req.user._id) ||
-      match.posterId.equals(req.user._id);
+      match.seekerId.equals(req.user._id) || match.posterId.equals(req.user._id);
     if (!isParticipant) return res.status(403).json({ error: "Forbidden" });
 
     await db.collection("matches").deleteOne({ _id: match._id });

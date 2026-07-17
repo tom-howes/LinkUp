@@ -14,9 +14,7 @@ const router = express.Router();
 async function loadUnlockedMatch(db, matchId, user) {
   let match;
   try {
-    match = await db
-      .collection("matches")
-      .findOne({ _id: new ObjectId(matchId) });
+    match = await db.collection("matches").findOne({ _id: new ObjectId(matchId) });
   } catch (err) {
     return { status: 400, error: "Invalid id" };
   }
@@ -91,9 +89,7 @@ router.put("/message/:id", requireAuth, async (req, res) => {
     await db
       .collection("messages")
       .updateOne({ _id: message._id }, { $set: { text, editedAt: new Date() } });
-    const fresh = await db
-      .collection("messages")
-      .findOne({ _id: message._id });
+    const fresh = await db.collection("messages").findOne({ _id: message._id });
     res.json(fresh);
   } catch (err) {
     res.status(400).json({ error: "Invalid id" });
