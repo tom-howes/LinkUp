@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" font-family="Segoe UI, system-ui, sans-serif">
+  <rect x="8" y="8" width="864" height="544" rx="10" fill="#f5f6f8" stroke="#e2e5ea" />
+
+  <!-- navbar -->
+  <rect x="8" y="8" width="864" height="50" fill="#1f2a44" />
+  <text x="28" y="39" font-size="17" font-weight="700" fill="#ffffff">LinkUp</text>
+  <rect x="470" y="18" width="100" height="30" rx="5" fill="#2d6cdf" />
+  <text x="520" y="38" text-anchor="middle" font-size="12" fill="#ffffff">My Postings</text>
+  <text x="605" y="38" text-anchor="middle" font-size="12" fill="#cdd5e5">Matches</text>
+  <text x="675" y="38" text-anchor="middle" font-size="12" fill="#cdd5e5">Profile</text>
+  <text x="748" y="38" font-size="11" fill="#8b97ac">EMPLOYER</text>
+
+  <text x="40" y="92" font-size="20" font-weight="700" fill="#1f2a44">My Postings</text>
+
+  <!-- create form -->
+  <rect x="40" y="108" width="800" height="250" rx="8" fill="#fafafa" stroke="#dddddd" />
+  <text x="60" y="134" font-size="15" font-weight="700" fill="#1f2a44">New posting</text>
+
+  <text x="60" y="160" font-size="11" font-weight="600" fill="#1f2a44">Job title</text>
+  <rect x="60" y="168" width="360" height="32" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="72" y="189" font-size="11" fill="#4b5563">Backend Developer</text>
+
+  <text x="60" y="222" font-size="11" font-weight="600" fill="#1f2a44">Required skills (1–2)</text>
+  <rect x="60" y="230" width="175" height="32" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="72" y="251" font-size="11" fill="#4b5563">Node.js</text>
+  <rect x="245" y="230" width="175" height="32" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="257" y="251" font-size="11" fill="#4b5563">MongoDB</text>
+
+  <text x="60" y="288" font-size="11" font-weight="600" fill="#1f2a44">Location</text>
+  <rect x="60" y="296" width="360" height="30" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="72" y="316" font-size="11" fill="#4b5563">Remote</text>
+
+  <text x="450" y="160" font-size="11" font-weight="600" fill="#1f2a44">Description</text>
+  <rect x="450" y="168" width="370" height="120" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="462" y="189" font-size="11" fill="#4b5563">Build and maintain the LinkUp API and</text>
+  <text x="462" y="207" font-size="11" fill="#4b5563">data model with a small team.</text>
+
+  <rect x="450" y="300" width="160" height="36" rx="5" fill="#2d6cdf" />
+  <text x="530" y="323" text-anchor="middle" font-size="12" font-weight="600" fill="#ffffff">Create posting</text>
+
+  <!-- existing posting card w/ controls -->
+  <rect x="40" y="374" width="800" height="128" rx="8" fill="#ffffff" stroke="#dddddd" />
+  <text x="60" y="404" font-size="16" font-weight="700" fill="#1f2a44">Product Manager</text>
+  <text x="60" y="426" font-size="12" fill="#66707f">Acme Corp · Remote · open</text>
+  <text x="60" y="452" font-size="13" font-weight="600" fill="#1f2a44">Required: Communication, SQL</text>
+  <text x="60" y="476" font-size="12" fill="#4b5563">Own the roadmap for our core matching experience.</text>
+
+  <rect x="690" y="392" width="130" height="28" rx="5" fill="#2d6cdf" />
+  <text x="755" y="411" text-anchor="middle" font-size="11" fill="#ffffff">Edit</text>
+  <rect x="690" y="426" width="130" height="28" rx="5" fill="#2d6cdf" />
+  <text x="755" y="445" text-anchor="middle" font-size="11" fill="#ffffff">Close</text>
+  <rect x="690" y="460" width="130" height="28" rx="5" fill="#c0392b" />
+  <text x="755" y="479" text-anchor="middle" font-size="11" fill="#ffffff">Delete</text>
+
+  <text x="440" y="528" text-anchor="middle" font-size="12" fill="#9aa3af">Screen 4 — Employer posting CRUD (create form + edit / close / delete)</text>
+</svg>

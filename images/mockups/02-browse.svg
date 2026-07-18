@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" font-family="Segoe UI, system-ui, sans-serif">
+  <rect x="8" y="8" width="864" height="544" rx="10" fill="#f5f6f8" stroke="#e2e5ea" />
+
+  <!-- navbar -->
+  <rect x="8" y="8" width="864" height="50" fill="#1f2a44" />
+  <text x="28" y="39" font-size="17" font-weight="700" fill="#ffffff">LinkUp</text>
+  <rect x="470" y="18" width="80" height="30" rx="5" fill="#2d6cdf" />
+  <text x="510" y="38" text-anchor="middle" font-size="12" fill="#ffffff">Browse</text>
+  <text x="580" y="38" text-anchor="middle" font-size="12" fill="#cdd5e5">Matches</text>
+  <text x="650" y="38" text-anchor="middle" font-size="12" fill="#cdd5e5">Profile</text>
+  <text x="742" y="38" font-size="11" fill="#8b97ac">SEEKER</text>
+  <rect x="792" y="18" width="60" height="30" rx="5" fill="none" stroke="#4a5878" />
+  <text x="822" y="38" text-anchor="middle" font-size="11" fill="#ffffff">Log out</text>
+
+  <text x="40" y="92" font-size="20" font-weight="700" fill="#1f2a44">Browse Postings</text>
+
+  <!-- search -->
+  <rect x="40" y="108" width="660" height="38" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="54" y="132" font-size="13" fill="#9aa3af">Search title, skill, location…</text>
+  <rect x="712" y="108" width="128" height="38" rx="5" fill="#2d6cdf" />
+  <text x="776" y="132" text-anchor="middle" font-size="13" fill="#ffffff">Search</text>
+
+  <!-- posting card 1 -->
+  <rect x="40" y="166" width="800" height="112" rx="8" fill="#ffffff" stroke="#dddddd" />
+  <text x="60" y="196" font-size="16" font-weight="700" fill="#1f2a44">Frontend Developer</text>
+  <text x="60" y="218" font-size="12" fill="#66707f">Acme Corp · Remote</text>
+  <text x="60" y="244" font-size="13" font-weight="600" fill="#1f2a44">Required: React, TypeScript</text>
+  <text x="60" y="266" font-size="12" fill="#4b5563">Build and ship the customer-facing dashboard with our small product team.</text>
+
+  <!-- posting card 2 -->
+  <rect x="40" y="290" width="800" height="112" rx="8" fill="#ffffff" stroke="#dddddd" />
+  <text x="60" y="320" font-size="16" font-weight="700" fill="#1f2a44">Data Analyst</text>
+  <text x="60" y="342" font-size="12" fill="#66707f">Globex · Boston, MA</text>
+  <text x="60" y="368" font-size="13" font-weight="600" fill="#1f2a44">Required: SQL, Python</text>
+  <text x="60" y="390" font-size="12" fill="#4b5563">Turn raw product events into weekly insight reports for the leadership team.</text>
+
+  <!-- posting card 3 -->
+  <rect x="40" y="414" width="800" height="86" rx="8" fill="#ffffff" stroke="#dddddd" />
+  <text x="60" y="444" font-size="16" font-weight="700" fill="#1f2a44">DevOps Engineer</text>
+  <text x="60" y="466" font-size="12" fill="#66707f">Initech · Remote</text>
+  <text x="60" y="490" font-size="13" font-weight="600" fill="#1f2a44">Required: AWS, Docker</text>
+
+  <text x="440" y="528" text-anchor="middle" font-size="12" fill="#9aa3af">Screen 2 — Browse &amp; search open postings (seeker)</text>
+</svg>

@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" font-family="Segoe UI, system-ui, sans-serif">
+  <rect x="8" y="8" width="864" height="544" rx="10" fill="#f5f6f8" stroke="#e2e5ea" />
+
+  <!-- brand -->
+  <g transform="translate(400,70)">
+    <rect x="0" y="0" width="34" height="34" rx="8" fill="#2d6cdf" />
+    <circle cx="12" cy="12" r="4" fill="#fff" />
+    <circle cx="22" cy="22" r="4" fill="#fff" />
+    <line x1="12" y1="12" x2="22" y2="22" stroke="#fff" stroke-width="3" stroke-linecap="round" />
+    <text x="46" y="25" font-size="24" font-weight="700" fill="#1f2a44">LinkUp</text>
+  </g>
+  <text x="440" y="128" text-anchor="middle" font-size="14" fill="#66707f">Targeted job matching &amp; private chat</text>
+
+  <!-- auth card -->
+  <rect x="290" y="160" width="300" height="330" rx="10" fill="#ffffff" stroke="#dddddd" />
+
+  <!-- tabs -->
+  <rect x="310" y="182" width="125" height="34" rx="5" fill="#2d6cdf" />
+  <text x="372" y="204" text-anchor="middle" font-size="13" fill="#ffffff">Log in</text>
+  <rect x="445" y="182" width="125" height="34" rx="5" fill="#f0f0f0" />
+  <text x="507" y="204" text-anchor="middle" font-size="13" fill="#66707f">Register</text>
+
+  <text x="310" y="248" font-size="12" font-weight="600" fill="#1f2a44">Email</text>
+  <rect x="310" y="256" width="260" height="36" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="322" y="279" font-size="12" fill="#9aa3af">you@example.com</text>
+
+  <text x="310" y="318" font-size="12" font-weight="600" fill="#1f2a44">Password</text>
+  <rect x="310" y="326" width="260" height="36" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="322" y="349" font-size="12" fill="#9aa3af">••••••••</text>
+
+  <text x="310" y="388" font-size="12" font-weight="600" fill="#1f2a44">I am a  (register only)</text>
+  <rect x="310" y="396" width="260" height="36" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="322" y="419" font-size="12" fill="#4b5563">Jobseeker ▾</text>
+
+  <rect x="310" y="446" width="260" height="38" rx="5" fill="#2d6cdf" />
+  <text x="440" y="470" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">Log in</text>
+
+  <text x="440" y="524" text-anchor="middle" font-size="12" fill="#9aa3af">Screen 1 — Login / Register (Passport local auth)</text>
+</svg>

@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" font-family="Segoe UI, system-ui, sans-serif">
+  <rect x="8" y="8" width="864" height="544" rx="10" fill="#f5f6f8" stroke="#e2e5ea" />
+
+  <!-- navbar -->
+  <rect x="8" y="8" width="864" height="50" fill="#1f2a44" />
+  <text x="28" y="39" font-size="17" font-weight="700" fill="#ffffff">LinkUp</text>
+  <text x="510" y="38" text-anchor="middle" font-size="12" fill="#cdd5e5">Browse</text>
+  <rect x="545" y="18" width="80" height="30" rx="5" fill="#2d6cdf" />
+  <text x="585" y="38" text-anchor="middle" font-size="12" fill="#ffffff">Matches</text>
+  <text x="655" y="38" text-anchor="middle" font-size="12" fill="#cdd5e5">Profile</text>
+
+  <text x="40" y="92" font-size="20" font-weight="700" fill="#1f2a44">Your Matches</text>
+  <rect x="700" y="74" width="140" height="34" rx="5" fill="#2d6cdf" />
+  <text x="770" y="96" text-anchor="middle" font-size="12" fill="#ffffff">Generate matches</text>
+
+  <!-- match card 1 (unlocked) -->
+  <rect x="40" y="126" width="430" height="120" rx="8" fill="#ffffff" stroke="#dddddd" />
+  <text x="60" y="154" font-size="15" font-weight="700" fill="#1f2a44">Frontend Developer</text>
+  <text x="60" y="174" font-size="11" fill="#66707f">Acme Corp · Remote</text>
+  <text x="60" y="198" font-size="12" fill="#4b5563">Matched skills: React</text>
+  <rect x="60" y="210" width="70" height="22" rx="11" fill="#e6f0ff" />
+  <text x="95" y="225" text-anchor="middle" font-size="10" fill="#2d6cdf" font-weight="700">UNLOCKED</text>
+  <rect x="300" y="140" width="150" height="26" rx="5" fill="#2d6cdf" />
+  <text x="375" y="158" text-anchor="middle" font-size="11" fill="#ffffff">Open chat</text>
+  <rect x="300" y="172" width="150" height="26" rx="5" fill="#eef1f5" stroke="#cbd2db" />
+  <text x="375" y="190" text-anchor="middle" font-size="11" fill="#4b5563">Dismiss</text>
+
+  <!-- match card 2 (pending) -->
+  <rect x="40" y="262" width="430" height="120" rx="8" fill="#ffffff" stroke="#dddddd" />
+  <text x="60" y="290" font-size="15" font-weight="700" fill="#1f2a44">Data Analyst</text>
+  <text x="60" y="310" font-size="11" fill="#66707f">Globex · Boston, MA</text>
+  <text x="60" y="334" font-size="12" fill="#4b5563">Matched skills: SQL, Python</text>
+  <rect x="60" y="346" width="64" height="22" rx="11" fill="#eef1f5" />
+  <text x="92" y="361" text-anchor="middle" font-size="10" fill="#66707f" font-weight="700">PENDING</text>
+  <rect x="300" y="308" width="150" height="26" rx="5" fill="#2d6cdf" />
+  <text x="375" y="326" text-anchor="middle" font-size="11" fill="#ffffff">Unlock chat</text>
+
+  <!-- chat overlay panel -->
+  <rect x="500" y="118" width="340" height="400" rx="10" fill="#ffffff" stroke="#c7ced8" />
+  <rect x="500" y="118" width="340" height="46" rx="10" fill="#ffffff" />
+  <line x1="500" y1="164" x2="840" y2="164" stroke="#eeeeee" />
+  <text x="520" y="147" font-size="14" font-weight="700" fill="#1f2a44">Private chat</text>
+  <text x="820" y="148" text-anchor="middle" font-size="18" fill="#9aa3af">×</text>
+
+  <!-- their bubble -->
+  <rect x="520" y="182" width="210" height="40" rx="12" fill="#eeeeee" />
+  <text x="534" y="206" font-size="11" fill="#222222">Hi! Your React work looks great.</text>
+  <!-- my bubble -->
+  <rect x="610" y="234" width="212" height="40" rx="12" fill="#2d6cdf" />
+  <text x="624" y="258" font-size="11" fill="#ffffff">Thanks! Happy to walk through it.</text>
+  <!-- their bubble -->
+  <rect x="520" y="286" width="230" height="40" rx="12" fill="#eeeeee" />
+  <text x="534" y="310" font-size="11" fill="#222222">Are you available for a quick call?</text>
+
+  <!-- composer -->
+  <line x1="500" y1="470" x2="840" y2="470" stroke="#eeeeee" />
+  <rect x="516" y="482" width="230" height="30" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="528" y="502" font-size="11" fill="#9aa3af">Type a message…</text>
+  <rect x="754" y="482" width="72" height="30" rx="5" fill="#2d6cdf" />
+  <text x="790" y="502" text-anchor="middle" font-size="11" fill="#ffffff">Send</text>
+
+  <text x="440" y="540" text-anchor="middle" font-size="12" fill="#9aa3af">Screen 3 — Matches list with private chat unlocked on a match</text>
+</svg>

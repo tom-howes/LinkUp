@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 880 560" font-family="Segoe UI, system-ui, sans-serif">
+  <rect x="8" y="8" width="864" height="544" rx="10" fill="#f5f6f8" stroke="#e2e5ea" />
+
+  <!-- navbar -->
+  <rect x="8" y="8" width="864" height="50" fill="#1f2a44" />
+  <text x="28" y="39" font-size="17" font-weight="700" fill="#ffffff">LinkUp</text>
+  <text x="510" y="38" text-anchor="middle" font-size="12" fill="#cdd5e5">Browse</text>
+  <text x="580" y="38" text-anchor="middle" font-size="12" fill="#cdd5e5">Matches</text>
+  <rect x="620" y="18" width="76" height="30" rx="5" fill="#2d6cdf" />
+  <text x="658" y="38" text-anchor="middle" font-size="12" fill="#ffffff">Profile</text>
+
+  <text x="40" y="92" font-size="20" font-weight="700" fill="#1f2a44">Your Profile</text>
+
+  <rect x="40" y="108" width="800" height="400" rx="8" fill="#ffffff" stroke="#dddddd" />
+
+  <text x="64" y="142" font-size="12" font-weight="600" fill="#1f2a44">Desired job title</text>
+  <rect x="64" y="150" width="500" height="34" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="78" y="172" font-size="12" fill="#4b5563">Frontend Developer</text>
+
+  <text x="64" y="214" font-size="13" font-weight="700" fill="#1f2a44">Skills (max 3)</text>
+  <rect x="700" y="198" width="116" height="30" rx="5" fill="#eef1f5" stroke="#cbd2db" />
+  <text x="758" y="218" text-anchor="middle" font-size="11" fill="#4b5563">Add skill</text>
+
+  <!-- skill 1 -->
+  <rect x="64" y="238" width="360" height="34" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="78" y="260" font-size="12" fill="#4b5563">React</text>
+  <rect x="432" y="238" width="290" height="34" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="446" y="260" font-size="11" fill="#4b5563">Shipped 3 production apps at my last co-op</text>
+  <rect x="730" y="238" width="86" height="34" rx="5" fill="#eef1f5" stroke="#cbd2db" />
+  <text x="773" y="260" text-anchor="middle" font-size="11" fill="#4b5563">Remove</text>
+
+  <!-- skill 2 -->
+  <rect x="64" y="284" width="360" height="34" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="78" y="306" font-size="12" fill="#4b5563">TypeScript</text>
+  <rect x="432" y="284" width="290" height="34" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="446" y="306" font-size="11" fill="#4b5563">Migrated a 20k-line codebase to strict TS</text>
+  <rect x="730" y="284" width="86" height="34" rx="5" fill="#eef1f5" stroke="#cbd2db" />
+  <text x="773" y="306" text-anchor="middle" font-size="11" fill="#4b5563">Remove</text>
+
+  <!-- skill 3 -->
+  <rect x="64" y="330" width="360" height="34" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="78" y="352" font-size="12" fill="#4b5563">CSS</text>
+  <rect x="432" y="330" width="290" height="34" rx="5" fill="#fff" stroke="#cccccc" />
+  <text x="446" y="352" font-size="11" fill="#4b5563">Built the design system for a class project</text>
+  <rect x="730" y="330" width="86" height="34" rx="5" fill="#eef1f5" stroke="#cbd2db" />
+  <text x="773" y="352" text-anchor="middle" font-size="11" fill="#4b5563">Remove</text>
+
+  <text x="64" y="396" font-size="11" fill="#9aa3af">Each skill needs a name and a short piece of evidence.</text>
+
+  <rect x="64" y="440" width="150" height="40" rx="5" fill="#2d6cdf" />
+  <text x="139" y="465" text-anchor="middle" font-size="13" font-weight="600" fill="#ffffff">Save profile</text>
+
+  <text x="440" y="534" text-anchor="middle" font-size="12" fill="#9aa3af">Screen 5 — Seeker profile: desired title + up to 3 evidenced skills</text>
+</svg>
