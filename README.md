@@ -77,7 +77,7 @@ Deployed as a **single service**: in production Express serves the built React
 app from the same origin (see `server.js`), so there is no cross-origin cookie
 or CORS setup to manage. Hosted on Render with MongoDB Atlas.
 
-**Live URL:** _add your Render URL here once deployed._
+**Live URL:** https://linkup-b91k.onrender.com/
 
 ### Steps
 1. **Database - MongoDB Atlas:** create a free M0 cluster, add a DB user, and
