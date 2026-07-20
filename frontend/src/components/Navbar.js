@@ -5,6 +5,9 @@ import "./Navbar.css";
  * Top nav bar. Shows different links depending on user.role (seeker vs
  * employer), highlights the active view, and has a logout button.
  */
+
+// On the nav bar if the user is signed in as an employer than it would be cool to have your compnay name shown on the nav bar next to your name
+// Right now when I save the company name I can't see it anywhere other than where I saved it
 function Navbar({ user, currentView, onNavigate, onLogout }) {
   const links =
     user.role === "seeker"
