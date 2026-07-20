@@ -10,6 +10,9 @@ import "./PostingList.css";
  * scope="mine" shows the employer's own postings (api.getMyPostings) with
  * create / edit / close / delete controls (author only).
  */
+
+// For this component I would have liked to see the cards be clickable, it was my natural intuition to click the the card
+// for the listing and was thrown off when I wasn't able to. Made something you could add if you every come back to this project
 function PostingList({ scope }) {
   const [postings, setPostings] = useState([]);
   const [loading, setLoading] = useState(true);
