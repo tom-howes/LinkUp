@@ -288,6 +288,8 @@ hosting dashboard only.
 
 ## Deployment
 
+**Live URL:** https://linkup-b91k.onrender.com/
+
 Deployed as a **single service**: in production Express serves the built React
 app from the same origin as the API (see `backend/server.js`), so there is no
 cross-origin cookie or CORS setup to manage. Sessions live in MongoDB, so the

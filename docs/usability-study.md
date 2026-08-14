@@ -5,6 +5,9 @@
 > **john.guerra@gmail.com** before submitting.
 
 **Author:** Thomas Howes
+**Build under test:** https://linkup-b91k.onrender.com/
+**Method:** Moderated think-aloud, ~30 minutes per session, 3 participants
+
 _LinkUp round 1 was a two-person project with Tony Zhang. This design,
 accessibility and usability iteration — including this study — is solo, so the
 requirement is 3 participants (3 per project member × 1 member)._
