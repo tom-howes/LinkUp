@@ -295,8 +295,6 @@ app from the same origin as the API (see `backend/server.js`), so there is no
 cross-origin cookie or CORS setup to manage. Sessions live in MongoDB, so the
 free tier's idle-sleep does not log everyone out mid-task.
 
-**Live URL:** https://linkup-b91k.onrender.com/
-
 ### Steps (Render + MongoDB Atlas)
 
 1. **Atlas:** create a free M0 cluster, add a database user, allow access from

@@ -69,7 +69,7 @@ Nobody who has seen the app before.
 
 ### 1.3 Data description
 
-Four MongoDB collections. The deployed build is seeded with **4,373 synthetic
+Four MongoDB collections. The deployed build is seeded with **over 4,000 synthetic
 records** so search and matching behave realistically.
 
 | Collection | Stored                                                                                                                       | Displayed                                                                     |
