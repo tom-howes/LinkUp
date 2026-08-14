@@ -1,0 +1,120 @@
+.card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  background-color: var(--c-surface);
+  box-shadow: var(--shadow-sm);
+  transition: border-color var(--transition-fast);
+}
+
+.card:hover {
+  border-color: var(--c-border-strong);
+}
+
+/* Closed postings are de-emphasised, but the "Closed" badge carries the
+   meaning - the dimming is never the only signal. */
+.closed {
+  background-color: var(--c-surface-sunken);
+}
+
+.closed .title,
+.closed .description {
+  color: var(--c-text-muted);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  flex: 1;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: var(--fs-md);
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.company {
+  font-weight: var(--fw-semibold);
+  color: var(--c-text);
+}
+
+.company::after {
+  content: "·";
+  margin-left: var(--space-2);
+  color: var(--c-text-muted);
+  font-weight: var(--fw-regular);
+}
+
+.skills {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-1);
+}
+
+.skillsLabel {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-overline);
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+}
+
+.skillList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.description {
+  max-width: var(--measure);
+  margin-top: var(--space-1);
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex-shrink: 0;
+  width: 8.5rem;
+}
+
+@media (max-width: 44rem) {
+  .card {
+    flex-direction: column;
+  }
+
+  .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}

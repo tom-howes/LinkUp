@@ -2,6 +2,7 @@ require("dotenv").config();
 const path = require("path");
 const express = require("express");
 const session = require("express-session");
+const MongoStore = require("connect-mongo");
 const passport = require("passport");
 
 const { connectDB } = require("./config/db");
@@ -35,11 +36,20 @@ app.use((req, res, next) => {
   next();
 });
 
+// Sessions live in Mongo, not in the default in-memory store. The free hosting
+// tier sleeps an idle service and restarts it on the next request, which with
+// the memory store logged everybody out mid-task.
 app.use(
   session({
     secret: process.env.SESSION_SECRET || "dev-secret",
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      dbName: process.env.MONGO_DB_NAME,
+      collectionName: "sessions",
+      ttl: 60 * 60 * 24 * 7,
+    }),
     cookie: {
       httpOnly: true,
       secure: isProd,

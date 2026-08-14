@@ -1,0 +1,139 @@
+.card {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-5);
+  padding: var(--space-5);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  background-color: var(--c-surface);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Dismissed matches recede, but the "Dismissed" badge still says so in words. */
+.dismissed {
+  background-color: var(--c-surface-sunken);
+}
+
+.dismissed .title {
+  color: var(--c-text-muted);
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  min-width: 0;
+  flex: 1;
+}
+
+.titleRow {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.title {
+  font-size: var(--fs-md);
+}
+
+.meta {
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.matched {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-3);
+  margin-top: var(--space-1);
+}
+
+.matchedLabel,
+.evidenceLabel {
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-overline);
+  text-transform: uppercase;
+  color: var(--c-text-muted);
+}
+
+.badgeList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.noneText {
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.evidence {
+  margin-top: var(--space-3);
+  padding-top: var(--space-3);
+  border-top: 1px solid var(--c-border);
+}
+
+.evidenceList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+}
+
+.evidenceItem {
+  display: grid;
+  grid-template-columns: minmax(6rem, 10rem) minmax(0, 1fr);
+  gap: var(--space-3);
+  align-items: baseline;
+}
+
+.evidenceSkill {
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+}
+
+.evidenceMatch {
+  font-weight: var(--fw-regular);
+  color: var(--c-accent-700);
+}
+
+.evidenceText {
+  max-width: var(--measure);
+  margin: 0;
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  flex-shrink: 0;
+  width: 9.5rem;
+}
+
+@media (max-width: 44rem) {
+  .card {
+    flex-direction: column;
+  }
+
+  .actions {
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+
+  .evidenceItem {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-1);
+  }
+}

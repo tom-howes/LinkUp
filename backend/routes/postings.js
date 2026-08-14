@@ -5,8 +5,6 @@ const { requireAuth } = require("../config/middleware");
 
 const router = express.Router();
 
-// Owned by: Thomas Howes (Postings & Chat)
-
 // Attach the poster's company name to a list of postings (single lookup).
 const withPoster = [
   {
@@ -86,18 +84,19 @@ router.get("/mine", requireAuth, async (req, res) => {
   }
 });
 
-// GET /api/postings/:id - single posting detail
-router.get("/:id", async (req, res) => {
+// GET /api/postings/titles - distinct titles across open postings.
+// Feeds the jobseeker's "desired title" datalist. Matching is an exact title
+// comparison, so suggesting the wording employers actually use is the
+// difference between a seeker getting matches and getting none.
+router.get("/titles", async (req, res) => {
   try {
     const db = getDB();
-    const results = await db
+    const titles = await db
       .collection("postings")
-      .aggregate([{ $match: { _id: new ObjectId(req.params.id) } }, ...withPoster])
-      .toArray();
-    if (results.length === 0) return res.status(404).json({ error: "Not found" });
-    res.json(results[0]);
+      .distinct("title", { status: { $ne: "closed" } });
+    res.json(titles.filter(Boolean).sort());
   } catch (err) {
-    res.status(400).json({ error: "Invalid id" });
+    res.status(500).json({ error: "Fetch failed" });
   }
 });
 

@@ -5,7 +5,6 @@ const { requireAuth } = require("../config/middleware");
 
 const router = express.Router();
 
-// Owned by: Thomas Howes (Postings & Chat)
 // Messages should only exist within an "unlocked" match between a seeker
 // and a poster - check the requester is a participant before allowing access.
 

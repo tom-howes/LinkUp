@@ -22,10 +22,12 @@ export const api = {
   logout: () => request("/api/auth/logout", { method: "POST" }),
   session: () => request("/api/auth/session"),
 
-  getMe: () => request("/api/users/me"),
   updateMe: (body) =>
     request("/api/users/me", { method: "PUT", body: JSON.stringify(body) }),
   deleteMe: () => request("/api/users/me", { method: "DELETE" }),
+  // Desired titles jobseekers are currently looking for - suggested to
+  // employers so their posting titles line up with real demand.
+  getSeekerTitles: () => request("/api/users/titles"),
 
   getMatches: () => request("/api/matches/mine"),
   generateMatches: () => request("/api/matches/generate", { method: "POST" }),
@@ -33,7 +35,7 @@ export const api = {
     request(`/api/matches/${id}`, { method: "PUT", body: JSON.stringify(body) }),
   deleteMatch: (id) => request(`/api/matches/${id}`, { method: "DELETE" }),
 
-  // Postings (Thomas)
+  // Postings
   getPostings: (params = {}) => {
     const qs = new URLSearchParams(
       Object.fromEntries(Object.entries(params).filter(([, v]) => v !== "" && v != null))
@@ -41,14 +43,15 @@ export const api = {
     return request(`/api/postings${qs ? `?${qs}` : ""}`);
   },
   getMyPostings: () => request("/api/postings/mine"),
-  getPosting: (id) => request(`/api/postings/${id}`),
+  // Titles employers are currently hiring for - suggested to jobseekers.
+  getPostingTitles: () => request("/api/postings/titles"),
   createPosting: (body) =>
     request("/api/postings", { method: "POST", body: JSON.stringify(body) }),
   updatePosting: (id, body) =>
     request(`/api/postings/${id}`, { method: "PUT", body: JSON.stringify(body) }),
   deletePosting: (id) => request(`/api/postings/${id}`, { method: "DELETE" }),
 
-  // Messages (Thomas)
+  // Messages
   getMessages: (matchId) => request(`/api/messages/${matchId}`),
   sendMessage: (matchId, text) =>
     request(`/api/messages/${matchId}`, {

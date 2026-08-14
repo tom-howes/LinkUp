@@ -1,0 +1,6 @@
+.message {
+  margin: 0;
+  max-width: var(--measure);
+  color: var(--c-text-muted);
+  line-height: var(--lh-normal);
+}

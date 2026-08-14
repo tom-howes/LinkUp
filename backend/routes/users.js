@@ -1,28 +1,21 @@
 const express = require("express");
-const { ObjectId } = require("mongodb");
 const { getDB } = require("../config/db");
 const { requireAuth } = require("../config/middleware");
 
 const router = express.Router();
 
-// GET /api/users/me - read own profile
-router.get("/me", requireAuth, async (req, res) => {
-  const { password, ...safe } = req.user;
-  res.json(safe);
-});
-
-// GET /api/users/:id - read a single profile (public fields only)
-router.get("/:id", async (req, res) => {
+// GET /api/users/titles - distinct desired titles across jobseekers.
+// Feeds the employer's posting-title datalist so their wording lines up with
+// the titles seekers are actually searching under.
+router.get("/titles", async (req, res) => {
   try {
     const db = getDB();
-    const user = await db
+    const titles = await db
       .collection("users")
-      .findOne({ _id: new ObjectId(req.params.id) });
-    if (!user) return res.status(404).json({ error: "Not found" });
-    const { password, email, ...pub } = user;
-    res.json(pub);
+      .distinct("desiredTitle", { role: "seeker" });
+    res.json(titles.filter(Boolean).sort());
   } catch (err) {
-    res.status(400).json({ error: "Invalid id" });
+    res.status(500).json({ error: "Fetch failed" });
   }
 });
 
@@ -68,14 +61,27 @@ router.put("/me", requireAuth, async (req, res) => {
   }
 });
 
-// DELETE /api/users/me - delete own account
+// DELETE /api/users/me - delete own account and everything that hangs off it.
+// Cascades in dependency order: messages -> matches -> postings -> the user,
+// so no thread or match is ever left pointing at somebody who no longer exists.
 router.delete("/me", requireAuth, async (req, res) => {
   try {
     const db = getDB();
     const uid = req.user._id;
-    await db.collection("users").deleteOne({ _id: uid });
-    await db.collection("matches").deleteMany({ seekerId: uid });
+
+    const matches = await db
+      .collection("matches")
+      .find({ $or: [{ seekerId: uid }, { posterId: uid }] })
+      .toArray();
+    const matchIds = matches.map((m) => m._id);
+
+    if (matchIds.length) {
+      await db.collection("messages").deleteMany({ matchId: { $in: matchIds } });
+      await db.collection("matches").deleteMany({ _id: { $in: matchIds } });
+    }
     await db.collection("postings").deleteMany({ posterId: uid });
+    await db.collection("users").deleteOne({ _id: uid });
+
     req.logout(() => {
       req.session.destroy(() => {
         res.clearCookie("connect.sid");

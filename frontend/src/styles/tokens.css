@@ -1,0 +1,152 @@
+/**
+ * LinkUp design tokens.
+ *
+ * Single source of truth for colour, typography, spacing, radius, elevation
+ * and motion. Every component module consumes these variables instead of
+ * hard-coded values, which is what keeps the palette and rhythm consistent
+ * across the whole app.
+ *
+ * Colour semantics (used consistently app-wide):
+ *   brand   -> the primary / approving action on a screen (Save, Create, Send)
+ *   neutral -> the cancelling or secondary action (Cancel, Dismiss, Back)
+ *   danger  -> destructive actions only (Delete), always behind a confirmation
+ *   success -> positive status feedback only, never an action
+ *   warn    -> "needs attention" status (a pending match)
+ *   accent  -> informational highlights (matched skills)
+ *
+ * Every foreground/background pair below meets WCAG 2.1 AA (>= 4.5:1 for body
+ * text, >= 3:1 for large text and UI boundaries).
+ */
+
+:root {
+  /* ---------------------------------------------------------------- colour */
+
+  /* Neutrals - a cool, slightly blue-tinted grey ramp so they sit calmly
+     next to the brand blue rather than looking muddy. */
+  --c-canvas: #f4f6fb;
+  --c-surface: #ffffff;
+  --c-surface-sunken: #f8fafd;
+  --c-border: #dbe1ee;
+  --c-border-strong: #b9c2d6;
+  --c-text: #16203a;
+  --c-text-muted: #55607a; /* 6.3:1 on --c-surface */
+  --c-text-inverse: #ffffff;
+
+  /* Navy - the app chrome (header). Deep and confident, reads as
+     "professional / hiring" without being corporate-grey. */
+  --c-navy-900: #0f172f;
+  --c-navy-800: #16213f;
+  --c-navy-700: #223058;
+  --c-navy-on: #dde3f2; /* 12.3:1 on --c-navy-800 */
+
+  /* Brand blue - primary and approving actions. */
+  --c-brand-50: #eef3ff;
+  --c-brand-100: #dbe6ff;
+  --c-brand-200: #bdd0ff;
+  --c-brand-600: #1d4ed8; /* 6.7:1 with white text */
+  --c-brand-700: #1a41b4;
+  --c-brand-800: #16358f;
+
+  /* Success - positive status feedback (saved, unlocked). */
+  --c-success-50: #e8f7ee;
+  --c-success-200: #a9dfbf;
+  --c-success-700: #15803d; /* 5.0:1 with white text */
+  --c-success-900: #0d5228;
+
+  /* Danger - destructive actions and blocking errors. */
+  --c-danger-50: #fef3f2;
+  --c-danger-200: #f5c3bf;
+  --c-danger-600: #b42318; /* 6.6:1 with white text */
+  --c-danger-700: #912018;
+
+  /* Warn - "waiting on you" status. */
+  --c-warn-50: #fff8ee;
+  --c-warn-200: #f3d5ac;
+  --c-warn-700: #b54708; /* 5.4:1 with white text */
+
+  /* Accent teal - informational highlights (matched skills). */
+  --c-accent-50: #ecfaff;
+  --c-accent-200: #a9dcec;
+  --c-accent-700: #0e7490; /* 5.4:1 with white text */
+
+  --c-overlay: rgba(15, 23, 47, 0.55);
+
+  /* Focus. Overridden to a warm gold inside dark surfaces so the ring stays
+     visible on navy (see global.css). */
+  --c-focus: var(--c-brand-600);
+  --c-focus-halo: rgba(29, 78, 216, 0.28);
+
+  /* ------------------------------------------------------------ typography */
+
+  /* Type pairing: Sora (geometric display) for headings and the brand, Inter
+     (humanist UI sans) for everything else. Distinct enough to build
+     hierarchy, related enough to feel like one voice. */
+  --font-display:
+    "Sora", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-body:
+    "Inter", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+
+  /* Modular scale, ratio 1.2 (minor third) from a 16px base. */
+  --fs-xs: 0.75rem; /* 12px - overlines, badges */
+  --fs-sm: 0.875rem; /* 14px - meta, hints */
+  --fs-base: 1rem; /* 16px - body */
+  --fs-md: 1.125rem; /* 18px - lead paragraphs */
+  --fs-lg: 1.375rem; /* 22px - card / section titles */
+  --fs-xl: 1.75rem; /* 28px - page titles */
+  --fs-2xl: 2.25rem; /* 36px - hero */
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  --lh-tight: 1.2;
+  --lh-snug: 1.35;
+  --lh-normal: 1.6;
+
+  --ls-tight: -0.02em;
+  --ls-overline: 0.08em;
+
+  /* --------------------------------------------------------------- spacing */
+
+  /* 4px base grid. Every margin, padding and gap in the app is one of these,
+     which is what makes the vertical rhythm line up. */
+  --space-1: 0.25rem; /* 4 */
+  --space-2: 0.5rem; /* 8 */
+  --space-3: 0.75rem; /* 12 */
+  --space-4: 1rem; /* 16 */
+  --space-5: 1.5rem; /* 24 */
+  --space-6: 2rem; /* 32 */
+  --space-7: 2.5rem; /* 40 */
+  --space-8: 3rem; /* 48 */
+  --space-9: 4rem; /* 64 */
+
+  /* --------------------------------------------------- shape and elevation */
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 47, 0.06);
+  --shadow-md: 0 4px 12px rgba(15, 23, 47, 0.08);
+  --shadow-lg: 0 18px 48px rgba(15, 23, 47, 0.24);
+
+  /* ---------------------------------------------------------- layout, misc */
+
+  --layout-max: 64rem; /* app content column */
+  --measure: 68ch; /* comfortable reading width */
+  --tap-target: 2.75rem; /* 44px minimum interactive size */
+  --header-height: 3.75rem;
+
+  --transition-fast: 120ms ease;
+  --transition-base: 180ms ease;
+}
+
+/* Honour the OS "reduce motion" setting everywhere. */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --transition-fast: 0ms;
+    --transition-base: 0ms;
+  }
+}

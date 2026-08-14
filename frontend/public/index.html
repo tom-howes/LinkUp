@@ -2,17 +2,33 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#2d6cdf" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.svg" />
+    <meta name="theme-color" content="#16213f" />
     <meta
       name="description"
-      content="LinkUp - targeted job matching and private chat for jobseekers and employers"
+      content="LinkUp is targeted job matching: jobseekers and employers commit to a few specific, evidenced skills up front, and a private chat opens only once there is a real match."
     />
-    <title>LinkUp</title>
+
+    <!--
+      Type pairing: Sora (display) for headings and the brand, Inter (UI sans)
+      for body copy. preconnect + display=swap so the fonts never block the
+      first paint and text stays readable while they load.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <title>LinkUp · Targeted job matching</title>
   </head>
   <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <noscript>
+      LinkUp needs JavaScript to run. Please enable JavaScript in your browser
+      and reload the page.
+    </noscript>
     <div id="root"></div>
   </body>
 </html>

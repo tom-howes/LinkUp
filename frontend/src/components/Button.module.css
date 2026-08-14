@@ -1,0 +1,101 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  min-height: var(--tap-target); /* 44px minimum touch target */
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  line-height: 1.2;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+/* --------------------------------------------------------------- variants */
+
+/* Approving / primary action. */
+.primary {
+  background-color: var(--c-brand-600);
+  border-color: var(--c-brand-600);
+  color: var(--c-text-inverse);
+}
+
+.primary:hover:not(:disabled) {
+  background-color: var(--c-brand-700);
+  border-color: var(--c-brand-700);
+}
+
+.primary:active:not(:disabled) {
+  background-color: var(--c-brand-800);
+  border-color: var(--c-brand-800);
+}
+
+/* Cancelling / secondary action. */
+.secondary {
+  background-color: var(--c-surface);
+  border-color: var(--c-border-strong);
+  color: var(--c-text);
+}
+
+.secondary:hover:not(:disabled) {
+  background-color: var(--c-surface-sunken);
+  border-color: var(--c-text-muted);
+}
+
+/* Destructive action. Never used without a confirmation step. */
+.danger {
+  background-color: var(--c-danger-600);
+  border-color: var(--c-danger-600);
+  color: var(--c-text-inverse);
+}
+
+.danger:hover:not(:disabled) {
+  background-color: var(--c-danger-700);
+  border-color: var(--c-danger-700);
+}
+
+/* Low-emphasis inline action. */
+.quiet {
+  min-height: auto;
+  padding: var(--space-1) var(--space-2);
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--c-brand-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.quiet:hover:not(:disabled) {
+  background-color: var(--c-brand-50);
+}
+
+/* ------------------------------------------------------------------ sizes */
+
+.sm {
+  min-height: 2rem;
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--fs-xs);
+}
+
+.md {
+  /* Base sizing already set on .button. */
+  min-height: var(--tap-target);
+}
+
+.fullWidth {
+  width: 100%;
+}

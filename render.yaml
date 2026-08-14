@@ -1,0 +1,27 @@
+# Render blueprint for LinkUp.
+#
+# Deployed as a single web service: the build compiles the React app, and in
+# production Express serves those static files from the same origin as the API
+# (see backend/server.js). One origin means no CORS and no third-party cookie
+# problems for the session.
+#
+# MONGO_URI is marked sync: false so the Atlas connection string is entered in
+# the Render dashboard and never lives in this repository.
+services:
+  - type: web
+    name: linkup
+    runtime: node
+    plan: free
+    region: oregon
+    buildCommand: npm run install:all && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGO_DB_NAME
+        value: linkup
+      - key: MONGO_URI
+        sync: false
+      - key: SESSION_SECRET
+        generateValue: true

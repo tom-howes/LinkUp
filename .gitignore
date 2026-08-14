@@ -18,3 +18,7 @@ npm-debug.log*
 .DS_Store
 .vscode/
 .idea/
+Thumbs.db
+
+# Office lock files
+~$*

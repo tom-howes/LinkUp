@@ -1,0 +1,141 @@
+/**
+ * Global base layer: a light reset, the typographic defaults built on the
+ * tokens, and the handful of genuinely app-wide utilities (skip link,
+ * screen-reader-only text, focus ring).
+ *
+ * Everything else lives in a per-component *.module.css file.
+ */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  /* Anchor/skip-link jumps land below the sticky header. */
+  scroll-padding-top: calc(var(--header-height) + var(--space-4));
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--c-canvas);
+  color: var(--c-text);
+  font-family: var(--font-body);
+  font-size: var(--fs-base);
+  font-weight: var(--fw-regular);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* -------------------------------------------------------------- headings */
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-family: var(--font-display);
+  font-weight: var(--fw-semibold);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--c-text);
+  /* Stops long unbroken job titles from overflowing their card. */
+  overflow-wrap: anywhere;
+}
+
+h1 {
+  font-size: var(--fs-xl);
+}
+
+h2 {
+  font-size: var(--fs-lg);
+}
+
+h3 {
+  font-size: var(--fs-md);
+}
+
+h4 {
+  font-size: var(--fs-base);
+}
+
+p {
+  margin: 0;
+}
+
+/* ------------------------------------------------------------ form basics */
+
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+textarea {
+  resize: vertical;
+}
+
+/* ------------------------------------------------------------- focus ring */
+
+/* Keyboard users always get a clearly visible, high-contrast ring. Pointer
+   users don't, which is why this is :focus-visible and not :focus. */
+:focus-visible {
+  outline: 2px solid var(--c-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+  box-shadow: 0 0 0 4px var(--c-focus-halo);
+}
+
+/* On the navy header the blue ring would disappear, so switch it to gold. */
+.on-dark {
+  --c-focus: #ffd166;
+  --c-focus-halo: rgba(255, 209, 102, 0.35);
+}
+
+/* --------------------------------------------------------- app utilities */
+
+/* Visually hidden but still announced by screen readers. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* First thing in the tab order: jump straight past the nav to the content. */
+.skip-link {
+  position: absolute;
+  top: var(--space-2);
+  left: var(--space-2);
+  z-index: 100;
+  transform: translateY(-200%);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  background-color: var(--c-surface);
+  color: var(--c-brand-700);
+  font-weight: var(--fw-semibold);
+  text-decoration: none;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-fast);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+/* Native <dialog> backdrop, shared by every modal in the app. */
+dialog::backdrop {
+  background-color: var(--c-overlay);
+}

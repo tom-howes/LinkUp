@@ -1,16 +1,22 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { api } from "../api/api";
-import "./PostingForm.css";
+import Button from "./Button";
+import Field from "./Field";
+import StatusMessage from "./StatusMessage";
+import styles from "./PostingForm.module.css";
+
+const MAX_SKILLS = 2;
 
 /**
- * Owned by: Thomas Howes
- * Create or edit a posting - title (must match a seeker's desiredTitle
- * exactly to generate matches), 1-2 requiredSkills, location, description.
- * Pass a `posting` to edit it; otherwise the form creates a new one.
- * Calls onSaved(posting) on success.
+ * Create or edit a posting. Pass a `posting` to edit it, otherwise it creates
+ * a new one, and calls onSaved(posting) either way.
+ *
+ * The required-skills rows live in a <fieldset> with a legend so the group has
+ * a name, and each row's input is individually labelled ("Required skill 1")
+ * rather than relying on a placeholder.
  */
-function PostingForm({ posting, onSaved, onCancel }) {
+function PostingForm({ posting, onSaved, onCancel, titleSuggestions = [] }) {
   const editing = Boolean(posting);
   const [title, setTitle] = useState(posting?.title || "");
   const [skills, setSkills] = useState(
@@ -18,6 +24,7 @@ function PostingForm({ posting, onSaved, onCancel }) {
   );
   const [location, setLocation] = useState(posting?.location || "");
   const [description, setDescription] = useState(posting?.description || "");
+  const [fieldErrors, setFieldErrors] = useState({});
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
 
@@ -26,7 +33,7 @@ function PostingForm({ posting, onSaved, onCancel }) {
   }
 
   function addSkill() {
-    if (skills.length >= 2) return;
+    if (skills.length >= MAX_SKILLS) return;
     setSkills((prev) => [...prev, ""]);
   }
 
@@ -34,19 +41,23 @@ function PostingForm({ posting, onSaved, onCancel }) {
     setSkills((prev) => prev.filter((_, i) => i !== index));
   }
 
-  async function handleSubmit(e) {
-    e.preventDefault();
+  async function handleSubmit(event) {
+    event.preventDefault();
     setError("");
 
     const cleanSkills = skills.map((s) => s.trim()).filter(Boolean);
+    const errors = {};
     if (!title.trim()) {
-      setError("Title is required");
-      return;
+      errors.title = "Give the role a job title.";
     }
-    if (cleanSkills.length < 1 || cleanSkills.length > 2) {
-      setError("Add 1 or 2 required skills");
-      return;
+    if (cleanSkills.length < 1) {
+      errors.skills = "Add at least one required skill.";
+    } else if (cleanSkills.length > MAX_SKILLS) {
+      errors.skills = `A posting can list at most ${MAX_SKILLS} required skills.`;
     }
+
+    setFieldErrors(errors);
+    if (Object.keys(errors).length > 0) return;
 
     setBusy(true);
     try {
@@ -67,73 +78,104 @@ function PostingForm({ posting, onSaved, onCancel }) {
     }
   }
 
-  return (
-    <form className="posting-form" onSubmit={handleSubmit}>
-      <h3>{editing ? "Edit posting" : "New posting"}</h3>
+  const headingId = editing ? `edit-posting-${posting._id}` : "new-posting";
 
-      <label htmlFor="posting-title">Job title</label>
-      <input
-        id="posting-title"
-        type="text"
+  return (
+    <form
+      className={styles.form}
+      onSubmit={handleSubmit}
+      aria-labelledby={headingId}
+      noValidate
+    >
+      <h2 id={headingId} className={styles.title}>
+        {editing ? "Edit posting" : "New posting"}
+      </h2>
+
+      <Field
+        id={`${headingId}-title`}
+        label="Job title"
         value={title}
+        required
+        list="title-suggestions"
         placeholder="e.g. Frontend Developer"
+        hint="Jobseekers are matched on an exact title, so use the standard wording for the role."
+        error={fieldErrors.title}
         onChange={(e) => setTitle(e.target.value)}
       />
+      <datalist id="title-suggestions">
+        {titleSuggestions.map((suggestion) => (
+          <option key={suggestion} value={suggestion} />
+        ))}
+      </datalist>
 
-      <div className="posting-skills-header">
-        <span>Required skills (1-2)</span>
-        <button type="button" onClick={addSkill} disabled={skills.length >= 2}>
-          Add skill
-        </button>
-      </div>
-      {skills.map((skill, i) => (
-        <div className="posting-skill-row" key={i}>
-          <input
-            type="text"
-            value={skill}
-            placeholder={`Skill ${i + 1}`}
-            onChange={(e) => setSkill(i, e.target.value)}
-          />
-          {skills.length > 1 && (
-            <button
-              type="button"
-              className="posting-skill-remove"
-              onClick={() => removeSkill(i)}
-            >
-              Remove
-            </button>
-          )}
-        </div>
-      ))}
+      <fieldset className={styles.skillsFieldset}>
+        <legend className={styles.legend}>Required skills</legend>
+        <p className={styles.legendHint}>
+          One or two only. The short list is the point - it is what keeps matches
+          specific.
+        </p>
 
-      <label htmlFor="posting-location">Location</label>
-      <input
-        id="posting-location"
-        type="text"
+        <ul className={styles.skillList}>
+          {skills.map((skill, i) => (
+            // Rows are identified by position; they are only appended or removed.
+            <li className={styles.skillRow} key={`required-skill-${i}`}>
+              <Field
+                id={`${headingId}-skill-${i}`}
+                label={`Required skill ${i + 1}`}
+                labelHidden
+                value={skill}
+                placeholder={`Required skill ${i + 1}, e.g. React`}
+                onChange={(e) => setSkill(i, e.target.value)}
+              />
+              {skills.length > 1 && (
+                <Button variant="secondary" onClick={() => removeSkill(i)}>
+                  Remove<span className="sr-only"> required skill {i + 1}</span>
+                </Button>
+              )}
+            </li>
+          ))}
+        </ul>
+
+        {fieldErrors.skills && (
+          <p className={styles.fieldError} role="alert">
+            {fieldErrors.skills}
+          </p>
+        )}
+
+        <Button size="sm" onClick={addSkill} disabled={skills.length >= MAX_SKILLS}>
+          Add a second skill
+        </Button>
+      </fieldset>
+
+      <Field
+        id={`${headingId}-location`}
+        label="Location"
         value={location}
-        placeholder="e.g. Remote / Boston, MA"
+        placeholder="e.g. Remote, or Boston, MA"
         onChange={(e) => setLocation(e.target.value)}
       />
 
-      <label htmlFor="posting-description">Description</label>
-      <textarea
-        id="posting-description"
+      <Field
+        id={`${headingId}-description`}
+        label="Description"
+        as="textarea"
         rows={4}
         value={description}
-        placeholder="What the role involves day-to-day"
+        placeholder="What the role involves day to day"
+        hint="Optional, but it helps candidates judge whether the role is right for them."
         onChange={(e) => setDescription(e.target.value)}
       />
 
-      {error && <p className="posting-form-error">{error}</p>}
+      <StatusMessage tone="error">{error}</StatusMessage>
 
-      <div className="posting-form-actions">
-        <button type="submit" className="posting-form-save" disabled={busy}>
-          {busy ? "Saving..." : editing ? "Save changes" : "Create posting"}
-        </button>
+      <div className={styles.actions}>
+        <Button type="submit" variant="primary" disabled={busy}>
+          {busy ? "Saving..." : editing ? "Save changes" : "Publish posting"}
+        </Button>
         {onCancel && (
-          <button type="button" className="posting-form-cancel" onClick={onCancel}>
+          <Button variant="secondary" onClick={onCancel}>
             Cancel
-          </button>
+          </Button>
         )}
       </div>
     </form>
@@ -150,6 +192,7 @@ PostingForm.propTypes = {
   }),
   onSaved: PropTypes.func.isRequired,
   onCancel: PropTypes.func,
+  titleSuggestions: PropTypes.arrayOf(PropTypes.string),
 };
 
 export default PostingForm;

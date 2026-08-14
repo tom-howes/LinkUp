@@ -1,0 +1,90 @@
+.profile {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  max-width: 46rem;
+}
+
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.sectionHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.sectionTitle {
+  font-size: var(--fs-lg);
+}
+
+.sectionHint {
+  max-width: var(--measure);
+  margin-top: var(--space-1);
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+}
+
+.skillList {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.noSkills {
+  padding: var(--space-5);
+  border: 1px dashed var(--c-border-strong);
+  border-radius: var(--radius-md);
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.feedback {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.feedback:empty {
+  display: none;
+}
+
+.dangerZone {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--c-danger-200);
+  border-radius: var(--radius-md);
+  background-color: var(--c-danger-50);
+}
+
+.dangerTitle {
+  font-size: var(--fs-base);
+  color: var(--c-danger-700);
+}
+
+.dangerText {
+  max-width: var(--measure);
+  margin-bottom: var(--space-1);
+  color: var(--c-danger-700);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-snug);
+}
+
+@media (max-width: 40rem) {
+  .sectionHead {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

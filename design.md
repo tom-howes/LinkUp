@@ -2,7 +2,8 @@
 
 **Targeted Job Matching & Private Chat**
 
-- **Authors:** Tony Zhang, Thomas Howes
+- **Author:** Thomas Howes (design/accessibility iteration, solo)
+- **Round-1 co-author:** Tony Zhang
 - **Class:** [Web Development, Summer 2026](https://johnguerra.co/classes/webDevelopment_online_summer_2026/)
 - **Repository:** github.com/tom-howes/LinkUp
 
@@ -123,8 +124,9 @@ Written as stories (who / want / so that), each with acceptance criteria.
 
 ## 4. Design Mockups
 
-Low-fidelity wireframes of the primary screens. Colors reflect the shipped UI
-(navy nav `#1f2a44`, primary action blue `#2d6cdf`).
+Low-fidelity wireframes of the primary screens, drawn before the first build.
+The shipped UI follows this structure; the colours and type were revised in the
+design iteration documented in §7.
 
 ### 4.1 Login / Register
 
@@ -181,9 +183,124 @@ dependent matches / messages.
 
 ## 6. Tech Stack
 
-- **Frontend:** React (hooks, client-side rendering) via Create React App
+- **Frontend:** React (hooks, client-side rendering) via Create React App, with
+  CSS Modules and PropTypes on every component
 - **Backend:** Node.js + Express
 - **Database:** MongoDB (native Node.js driver)
-- **Auth:** Passport (local strategy) + express-session
+- **Auth:** Passport (local strategy) + express-session, sessions persisted in
+  MongoDB via `connect-mongo`
 - **Data requests:** Fetch API
 - Deliberately avoids Mongoose, Axios, and the `cors` package.
+
+---
+
+## 7. Design System
+
+Everything below lives in `frontend/src/styles/tokens.css` as CSS custom
+properties. No component hard-codes a colour, size or spacing value, which is
+what keeps the app visually consistent as it grows.
+
+### 7.1 Typography
+
+A two-family pairing, neither of them a browser default:
+
+| Role                      | Family    | Weights       | Why                                                                                                       |
+| ------------------------- | --------- | ------------- | --------------------------------------------------------------------------------------------------------- |
+| Display — headings, brand | **Sora**  | 600, 700      | Geometric and slightly technical; gives headings a distinct voice and reads as "product", not "document". |
+| Body — UI, prose          | **Inter** | 400, 500, 600 | A humanist sans designed specifically for screen UI: tall x-height, unambiguous `I`/`l`/`1`.              |
+
+They pair because both are neutral grotesques with matching x-heights, so they
+sit on the same baseline rhythm — but Sora's tighter, more geometric letterforms
+at `-0.02em` tracking read as a different level of the hierarchy at a glance.
+
+Sizes are a **1.2 (minor third) modular scale** from a 16px base:
+
+| Token       | Size          | Used for                     |
+| ----------- | ------------- | ---------------------------- |
+| `--fs-xs`   | 0.75rem (12)  | overlines, badges, hints     |
+| `--fs-sm`   | 0.875rem (14) | meta text, buttons, body-sm  |
+| `--fs-base` | 1rem (16)     | body                         |
+| `--fs-md`   | 1.125rem (18) | lead paragraphs, card titles |
+| `--fs-lg`   | 1.375rem (22) | section titles               |
+| `--fs-xl`   | 1.75rem (28)  | page titles (`<h1>`)         |
+| `--fs-2xl`  | 2.25rem (36)  | landing-page hero            |
+
+Line heights: `1.2` tight (headings), `1.35` snug (dense UI), `1.6` normal
+(prose). Prose is capped at `68ch` (`--measure`) for comfortable reading.
+
+### 7.2 Colour
+
+The palette is built around a navy/blue core — the register a hiring product
+needs to be trusted in — with a teal accent so informational highlights don't
+compete with the primary action.
+
+The important part is that colour carries **one consistent meaning everywhere**:
+
+| Semantic                  | Token             | Hex                          | Applied to                                         |
+| ------------------------- | ----------------- | ---------------------------- | -------------------------------------------------- |
+| Approve / primary action  | `--c-brand-600`   | `#1d4ed8`                    | Save, Publish, Send, Log in, Unlock chat           |
+| Cancel / secondary action | neutral outline   | `#ffffff` + `#b9c2d6` border | Cancel, Dismiss, Clear, Back                       |
+| Destructive action        | `--c-danger-600`  | `#b42318`                    | Delete only — always behind a confirmation         |
+| Positive status           | `--c-success-700` | `#15803d`                    | "Saved", "Chat unlocked", "Open" — never an action |
+| Needs attention           | `--c-warn-700`    | `#b54708`                    | "Waiting on you"                                   |
+| Informational highlight   | `--c-accent-700`  | `#0e7490`                    | Matched skills                                     |
+| App chrome                | `--c-navy-800`    | `#16213f`                    | Header                                             |
+
+Two rules follow from this and are enforced by routing every action through the
+shared `Button` component:
+
+1. **There is exactly one blue button per screen region** — the primary action.
+   Everything else is neutral or, if destructive, red.
+2. **Green is a status colour, not an action colour.** In the previous build
+   "Save profile" was green while "Create posting" was blue, so the same kind of
+   action looked like two different things.
+
+Every foreground/background pair clears WCAG AA. The lowest ratio in the app is
+5.02:1 (matched-skill teal on its tint) against a 4.5:1 requirement; body text
+on the canvas is 14.92:1, and white on both the primary and destructive buttons
+is above 6.5:1.
+
+### 7.3 Spacing and layout
+
+A **4px grid**, `--space-1` (4px) through `--space-9` (64px). Every margin,
+padding and gap in the app is one of these values — that is what makes edges
+line up between a card, the search box above it and the page header above that.
+
+Content sits in a `64rem` column centred in the viewport. Cards use a
+`--radius-md` (10px) corner and a single subtle shadow (`--shadow-sm`), with
+heavier elevation reserved for modals.
+
+### 7.4 Visual hierarchy
+
+Every screen is built from the same `PageHeader`, which puts the most important
+things where the eye lands first — the top-left:
+
+1. `<h1>` in Sora at `--fs-xl` — the largest, heaviest thing on the screen.
+2. A one-line description directly under it in muted text.
+3. The screen's single most important action opposite it on the right: the only
+   large brand-blue button above the fold.
+4. A horizontal rule, then the content, all sharing the `<h1>`'s left edge.
+
+Within a card the same ordering applies: title first, then status badge, then
+metadata, then matched skills, then evidence, with the actions in a fixed-width
+column on the right so they align down the whole list.
+
+### 7.5 Component inventory
+
+| Component                                     | Responsibility                                                             |
+| --------------------------------------------- | -------------------------------------------------------------------------- |
+| `Button`                                      | The only button primitive; owns the approve/cancel/destroy colours         |
+| `Field`                                       | Labelled control; wires up hint, error, `aria-describedby`, `aria-invalid` |
+| `Badge`                                       | Status and skill chips; tone + always-worded label                         |
+| `Modal`                                       | Native `<dialog>` wrapper: focus trap, Escape, focus return                |
+| `ConfirmDialog`                               | Confirmation in front of every destructive action                          |
+| `PageHeader`                                  | The hierarchy pattern above                                                |
+| `EmptyState`                                  | Explains _why_ a list is empty and what to do next                         |
+| `StatusMessage`                               | The one way errors and confirmations are announced                         |
+| `HelpPanel`                                   | Role-specific in-app instructions + keyboard shortcuts                     |
+| `Navbar`                                      | App chrome, landmark nav, `aria-current`                                   |
+| `PostingCard` / `PostingList` / `PostingForm` | Postings CRUD                                                              |
+| `MatchCard` / `MatchList`                     | Matches, filters, evidence display                                         |
+| `SkillInput` / `ProfileEditor`                | Evidenced-skill profile editing                                            |
+| `Chat`                                        | The private thread for an unlocked match                                   |
+| `AuthForm`                                    | Signed-out landing page and authentication                                 |

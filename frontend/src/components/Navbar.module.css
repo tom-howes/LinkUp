@@ -1,0 +1,149 @@
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background-color: var(--c-navy-800);
+  color: var(--c-navy-on);
+  box-shadow: var(--shadow-md);
+}
+
+.inner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-5);
+  max-width: var(--layout-max);
+  min-height: var(--header-height);
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-5);
+}
+
+/* Brand: top-left, largest type in the chrome - the first thing scanned. */
+.brand {
+  flex-shrink: 0;
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  letter-spacing: var(--ls-tight);
+  color: #ffffff;
+}
+
+.brandAccent {
+  color: var(--c-brand-200);
+}
+
+.nav {
+  flex: 1;
+  min-width: 0;
+}
+
+.navList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.navLink {
+  min-height: 2.5rem;
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--c-navy-on);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.navLink:hover {
+  background-color: var(--c-navy-700);
+  color: #ffffff;
+}
+
+.navLinkActive,
+.navLinkActive:hover {
+  background-color: var(--c-brand-600);
+  color: var(--c-text-inverse);
+  font-weight: var(--fw-semibold);
+}
+
+.account {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-shrink: 0;
+}
+
+.identity {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  text-align: right;
+  line-height: 1.2;
+}
+
+.email {
+  max-width: 12rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--fs-xs);
+  color: var(--c-navy-on);
+}
+
+.role {
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-overline);
+  text-transform: uppercase;
+  color: var(--c-brand-200);
+}
+
+.ghostButton {
+  min-height: 2.5rem;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--c-navy-700);
+  border-radius: var(--radius-sm);
+  background-color: transparent;
+  color: var(--c-navy-on);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.ghostButton:hover {
+  background-color: var(--c-navy-700);
+  color: #ffffff;
+}
+
+/* Stack the chrome on narrow screens rather than letting it squash. */
+@media (max-width: 60rem) {
+  .inner {
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
+
+  .nav {
+    order: 3;
+    flex-basis: 100%;
+  }
+
+  .account {
+    margin-left: auto;
+  }
+
+  .email {
+    display: none;
+  }
+}

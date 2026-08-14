@@ -1,0 +1,78 @@
+.lead {
+  max-width: var(--measure);
+  margin-bottom: var(--space-5);
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+}
+
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin: 0 0 var(--space-6);
+  padding: 0;
+  list-style: none;
+}
+
+.step {
+  padding-left: var(--space-4);
+  border-left: 3px solid var(--c-brand-200);
+}
+
+.stepTitle {
+  margin-bottom: var(--space-1);
+  font-size: var(--fs-base);
+}
+
+.stepBody {
+  max-width: var(--measure);
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+}
+
+.sectionTitle {
+  margin-bottom: var(--space-3);
+  padding-top: var(--space-4);
+  border-top: 1px solid var(--c-border);
+  font-size: var(--fs-base);
+}
+
+.shortcuts {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: 0;
+}
+
+.shortcut {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-3);
+}
+
+.shortcut dt {
+  flex: 0 0 11rem;
+}
+
+.shortcut dd {
+  flex: 1;
+  min-width: 12rem;
+  margin: 0;
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+}
+
+.shortcut kbd {
+  display: inline-block;
+  padding: 0.1rem var(--space-2);
+  border: 1px solid var(--c-border-strong);
+  border-bottom-width: 2px;
+  border-radius: var(--radius-sm);
+  background-color: var(--c-surface-sunken);
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+}

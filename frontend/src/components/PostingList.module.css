@@ -1,0 +1,82 @@
+.page {
+  display: flex;
+  flex-direction: column;
+}
+
+.search {
+  display: flex;
+  align-items: flex-end;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  background-color: var(--c-surface);
+}
+
+.search > *:first-child {
+  flex: 1;
+  min-width: 0;
+}
+
+.searchActions {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.feedback {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.feedback:not(:empty) {
+  margin-bottom: var(--space-4);
+}
+
+.resultCount {
+  margin-bottom: var(--space-3);
+  color: var(--c-text-muted);
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.tip {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-2);
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  border: 1px solid var(--c-brand-200);
+  border-radius: var(--radius-md);
+  background-color: var(--c-brand-50);
+}
+
+.tipTitle {
+  font-size: var(--fs-base);
+  color: var(--c-brand-800);
+}
+
+.tipText {
+  max-width: var(--measure);
+  color: var(--c-brand-800);
+  font-size: var(--fs-sm);
+  line-height: var(--lh-normal);
+}
+
+@media (max-width: 44rem) {
+  .search {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
