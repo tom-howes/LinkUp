@@ -22,7 +22,7 @@ co-authored the round-1 backend and frontend.
 
 | What           | Where                               |
 | -------------- | ----------------------------------- |
-| **Live app**   | https://linkup-b91k.onrender.com/   |
+| **Live app**   | https://linkup-bse3.onrender.com/   |
 | **Demo video** | _add the public video URL here_     |
 | **Slides**     | _add the slides URL here_           |
 | **Repository** | https://github.com/tom-howes/LinkUp |
@@ -288,7 +288,7 @@ hosting dashboard only.
 
 ## Deployment
 
-**Live URL:** https://linkup-b91k.onrender.com/
+**Live URL:** https://linkup-bse3.onrender.com/
 
 Deployed as a **single service**: in production Express serves the built React
 app from the same origin as the API (see `backend/server.js`), so there is no
