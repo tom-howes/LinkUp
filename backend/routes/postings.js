@@ -2,6 +2,7 @@ const express = require("express");
 const { ObjectId } = require("mongodb");
 const { getDB } = require("../config/db");
 const { requireAuth } = require("../config/middleware");
+const { generateForEmployer } = require("./matches");
 
 const router = express.Router();
 
@@ -123,6 +124,12 @@ router.post("/", requireAuth, async (req, res) => {
       createdAt: new Date(),
     };
     const result = await db.collection("postings").insertOne(doc);
+
+    // Match against existing seekers straight away, so the employer sees
+    // candidates the moment they publish rather than whenever a seeker next
+    // happens to open their own Matches page.
+    await generateForEmployer(db, req.user._id);
+
     res.status(201).json({ ...doc, _id: result.insertedId });
   } catch (err) {
     res.status(500).json({ error: "Create failed" });

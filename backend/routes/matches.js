@@ -5,8 +5,14 @@ const { requireAuth } = require("../config/middleware");
 
 const router = express.Router();
 
-// A match should be generated when a seeker's desiredTitle + at least one
-// skill overlaps with a posting's title + requiredSkills.
+// A match exists when a seeker's desiredTitle equals a posting's title and at
+// least one of the seeker's skills is on the posting's requiredSkills list.
+//
+// Matching has to be able to run from *either* side. Generating only when a
+// seeker opened their Matches page meant an employer could publish a posting
+// that hundreds of seekers qualified for and see nothing at all, until one of
+// those seekers happened to log in - the employer's half of the product looked
+// broken through no fault of theirs.
 
 function norm(s) {
   return String(s || "")
@@ -14,57 +20,113 @@ function norm(s) {
     .toLowerCase();
 }
 
-// POST /api/matches/generate - recompute matches for the current seeker
-router.post("/generate", requireAuth, async (req, res) => {
-  try {
-    if (req.user.role !== "seeker") {
-      return res.status(403).json({ error: "Seekers only" });
-    }
-    const db = getDB();
-    const seeker = req.user;
-    const seekerTitle = norm(seeker.desiredTitle);
-    const seekerSkills = new Set((seeker.skills || []).map((s) => norm(s.name)));
+/** The skills a seeker and a posting share, normalised. Empty means no match. */
+function overlap(seeker, posting) {
+  if (norm(seeker.desiredTitle) !== norm(posting.title)) return [];
+  const skills = new Set((seeker.skills || []).map((s) => norm(s.name)));
+  return (posting.requiredSkills || []).map(norm).filter((r) => skills.has(r));
+}
 
-    if (!seekerTitle || seekerSkills.size === 0) {
-      return res
-        .status(400)
-        .json({ error: "Set a desired title and at least one skill first" });
-    }
+/**
+ * Upsert matches for every (seeker, posting) pair given. Returns how many were
+ * newly created; pairs that already exist just have their matchedSkills
+ * refreshed, so re-running is safe and never duplicates.
+ */
+async function reconcile(db, seekers, postings) {
+  const ops = [];
+  let created = 0;
 
-    const postings = await db
-      .collection("postings")
-      .find({ status: { $ne: "closed" } })
-      .toArray();
-
-    let created = 0;
-    for (const p of postings) {
-      if (norm(p.title) !== seekerTitle) continue;
-      const req_ = (p.requiredSkills || []).map(norm);
-      const matched = req_.filter((r) => seekerSkills.has(r));
+  for (const seeker of seekers) {
+    for (const posting of postings) {
+      const matched = overlap(seeker, posting);
       if (matched.length === 0) continue;
 
-      const existing = await db.collection("matches").findOne({
-        seekerId: seeker._id,
-        postingId: p._id,
-      });
+      const existing = await db
+        .collection("matches")
+        .findOne(
+          { seekerId: seeker._id, postingId: posting._id },
+          { projection: { _id: 1 } }
+        );
+
       if (existing) {
-        await db
-          .collection("matches")
-          .updateOne({ _id: existing._id }, { $set: { matchedSkills: matched } });
+        ops.push({
+          updateOne: {
+            filter: { _id: existing._id },
+            update: { $set: { matchedSkills: matched } },
+          },
+        });
       } else {
-        await db.collection("matches").insertOne({
-          seekerId: seeker._id,
-          postingId: p._id,
-          posterId: p.posterId,
-          matchedSkills: matched,
-          status: "pending",
-          createdAt: new Date(),
+        ops.push({
+          insertOne: {
+            document: {
+              seekerId: seeker._id,
+              postingId: posting._id,
+              posterId: posting.posterId,
+              matchedSkills: matched,
+              status: "pending",
+              createdAt: new Date(),
+            },
+          },
         });
         created++;
       }
     }
+  }
 
-    res.json({ created });
+  if (ops.length) await db.collection("matches").bulkWrite(ops, { ordered: false });
+  return created;
+}
+
+/** Recompute matches for one seeker against every open posting. */
+async function generateForSeeker(db, seeker) {
+  if (!norm(seeker.desiredTitle) || (seeker.skills || []).length === 0) {
+    return { error: "Set a desired title and at least one skill first" };
+  }
+  const postings = await db
+    .collection("postings")
+    .find({ status: { $ne: "closed" } })
+    .toArray();
+  return { created: await reconcile(db, [seeker], postings) };
+}
+
+/** Recompute matches for one employer's open postings against every seeker. */
+async function generateForEmployer(db, employerId) {
+  const postings = await db
+    .collection("postings")
+    .find({ posterId: employerId, status: { $ne: "closed" } })
+    .toArray();
+  if (postings.length === 0) return { created: 0 };
+
+  // Only seekers who could possibly match: same title as one of the postings.
+  const titles = [...new Set(postings.map((p) => norm(p.title)))];
+  const seekers = await db
+    .collection("users")
+    .find({
+      role: "seeker",
+      desiredTitle: { $in: titles.map((t) => new RegExp(`^${escapeRegex(t)}$`, "i")) },
+    })
+    .toArray();
+
+  return { created: await reconcile(db, seekers, postings) };
+}
+
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+}
+
+// POST /api/matches/generate - recompute matches for whoever is signed in.
+// Seekers match their profile against every open posting; employers match
+// their own postings against every seeker.
+router.post("/generate", requireAuth, async (req, res) => {
+  try {
+    const db = getDB();
+    const result =
+      req.user.role === "seeker"
+        ? await generateForSeeker(db, req.user)
+        : await generateForEmployer(db, req.user._id);
+
+    if (result.error) return res.status(400).json({ error: result.error });
+    res.json({ created: result.created });
   } catch (err) {
     res.status(500).json({ error: "Generate failed" });
   }
@@ -166,3 +228,6 @@ router.delete("/:id", requireAuth, async (req, res) => {
 });
 
 module.exports = router;
+// Exposed so postings.js can reconcile matches the moment a posting is
+// created or edited, rather than waiting for the employer to open Matches.
+module.exports.generateForEmployer = generateForEmployer;

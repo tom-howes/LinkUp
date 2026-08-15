@@ -24,7 +24,7 @@ const FILTERS = [
  * until they did the screen was empty with nothing saying an action was
  * required - the core feature was gated behind a step nothing announced. For
  * jobseekers it now runs automatically when the screen opens; the button
- * remains as an explicit "Refresh matches" for after a profile edit.
+ * remains as an explicit "Refresh matches" for both roles.
  */
 function MatchList({ user, onOpenChat, onGoToProfile }) {
   const [matches, setMatches] = useState([]);
@@ -48,14 +48,18 @@ function MatchList({ user, onOpenChat, onGoToProfile }) {
     }
   }, []);
 
-  // Seekers get their matches recomputed on arrival, so the screen is never
-  // stale after a profile change. Employers only ever read.
+  // Both roles get their matches recomputed on arrival, so the screen is never
+  // stale after a profile edit or a new posting. A seeker needs a title and at
+  // least one skill before there is anything to match on; an employer just
+  // needs a posting, which the server checks.
+  const canGenerate = isSeeker ? hasProfile : true;
+
   const refresh = useCallback(
     async ({ announce } = {}) => {
       setRefreshing(true);
       setNotice("");
       try {
-        if (isSeeker && hasProfile) {
+        if (canGenerate) {
           const { created } = await api.generateMatches();
           if (announce) {
             setNotice(
@@ -73,7 +77,7 @@ function MatchList({ user, onOpenChat, onGoToProfile }) {
         setLoading(false);
       }
     },
-    [isSeeker, hasProfile, load]
+    [canGenerate, load]
   );
 
   useEffect(() => {
@@ -129,15 +133,13 @@ function MatchList({ user, onOpenChat, onGoToProfile }) {
             : "Jobseekers whose desired title matches one of your postings and who have at least one required skill, with the evidence they gave."
         }
         action={
-          isSeeker ? (
-            <Button
-              variant="primary"
-              onClick={() => refresh({ announce: true })}
-              disabled={refreshing || !hasProfile}
-            >
-              {refreshing ? "Refreshing..." : "Refresh matches"}
-            </Button>
-          ) : null
+          <Button
+            variant="primary"
+            onClick={() => refresh({ announce: true })}
+            disabled={refreshing || !canGenerate}
+          >
+            {refreshing ? "Refreshing..." : "Refresh matches"}
+          </Button>
         }
       />
 
