@@ -2,8 +2,7 @@
 
 **Targeted Job Matching & Private Chat**
 
-- **Author:** Thomas Howes (design/accessibility iteration, solo)
-- **Round-1 co-author:** Tony Zhang
+- **Authors:** Tony Zhang, Thomas Howes
 - **Class:** [Web Development, Summer 2026](https://johnguerra.co/classes/webDevelopment_online_summer_2026/)
 - **Repository:** github.com/tom-howes/LinkUp
 

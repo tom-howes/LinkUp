@@ -4,10 +4,7 @@
   "description": "LinkUp - targeted job matching and private chat. Root scripts for the backend (Express + MongoDB) and frontend (React) workspaces.",
   "private": true,
   "license": "MIT",
-  "author": "Thomas Howes",
-  "contributors": [
-    "Tony Zhang"
-  ],
+  "author": "Tony Zhang and Thomas Howes",
   "repository": {
     "type": "git",
     "url": "https://github.com/tom-howes/LinkUp.git"

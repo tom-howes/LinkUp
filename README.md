@@ -7,12 +7,10 @@ private chat only once there is a genuine match.
 
 ---
 
-## Author
+## Authors
 
-**Thomas Howes** — this iteration (design, accessibility and usability), solo.
-
-The original LinkUp build was a two-person project with **Tony Zhang**, who
-co-authored the round-1 backend and frontend.
+- **Tony Zhang**
+- **Thomas Howes**
 
 ## Class Link
 
@@ -347,9 +345,9 @@ this iteration. It records design reasoning, not observed user behaviour.
 ## AI Usage Disclosure
 
 AI tools were used for brainstorming, scaffolding boilerplate, debugging help,
-and writing support, including on this design and accessibility iteration. I
-implemented, understand, and can explain the full-stack logic in this
-repository, including the parts co-authored with Tony Zhang in round 1.
+and writing support, including on this design and accessibility iteration. Both
+students implemented, understand, and can explain the full-stack logic in this
+repository.
 
 ---
 

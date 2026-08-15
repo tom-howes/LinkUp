@@ -2,6 +2,7 @@
   "name": "linkup-backend",
   "version": "1.0.0",
   "description": "LinkUp backend - Express + MongoDB (native driver) + Passport",
+  "author": "Tony Zhang and Thomas Howes",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {

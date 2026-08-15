@@ -2,6 +2,7 @@
   "name": "linkup-frontend",
   "version": "1.0.0",
   "description": "LinkUp frontend - React (CRA, hooks, CSS Modules)",
+  "author": "Tony Zhang and Thomas Howes",
   "private": true,
   "license": "MIT",
   "proxy": "http://localhost:5000",
