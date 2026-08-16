@@ -7,6 +7,7 @@ import Field from "./Field";
 import StatusMessage from "./StatusMessage";
 import ConfirmDialog from "./ConfirmDialog";
 import { focusById } from "../utils/focus";
+import { autoGrow, autoGrowById, isSendKey } from "../utils/autoGrow";
 import styles from "./Chat.module.css";
 
 /**
@@ -38,6 +39,7 @@ function Chat({ matchId, partnerLabel, currentUserId, onClose }) {
   const [editText, setEditText] = useState("");
   const [pendingDelete, setPendingDelete] = useState(null);
   const endOfThreadRef = useRef(null);
+  const composerId = `chat-${matchId}-draft`;
 
   const load = useCallback(async () => {
     setLoading(true);
@@ -78,9 +80,26 @@ function Chat({ matchId, partnerLabel, currentUserId, onClose }) {
       const message = await api.sendMessage(matchId, text);
       setMessages((prev) => [...prev, message]);
       setDraft("");
+      // Clearing the value does not shrink the box on its own.
+      autoGrowById(composerId);
     } catch (err) {
       setError(err.message);
     }
+  }
+
+  // Enter sends, Shift+Enter starts a new line - the convention every chat
+  // app uses, and the reason the composer can be multi-line without costing
+  // an extra keystroke on every message.
+  function handleComposerKeyDown(event) {
+    if (!isSendKey(event)) return;
+    event.preventDefault();
+    handleSend(event);
+  }
+
+  function handleEditKeyDown(event, id) {
+    if (!isSendKey(event)) return;
+    event.preventDefault();
+    saveEdit(event, id);
   }
 
   function startEdit(message) {
@@ -130,13 +149,21 @@ function Chat({ matchId, partnerLabel, currentUserId, onClose }) {
         footer={
           <form className={styles.composer} onSubmit={handleSend}>
             <Field
-              id={`chat-${matchId}-draft`}
+              id={composerId}
+              as="textarea"
+              rows={1}
               label="Your message"
               labelHidden
+              hint="Enter sends, Shift+Enter starts a new line."
               value={draft}
               autoComplete="off"
               placeholder="Type a message..."
-              onChange={(e) => setDraft(e.target.value)}
+              className={styles.composerInput}
+              onKeyDown={handleComposerKeyDown}
+              onChange={(e) => {
+                setDraft(e.target.value);
+                autoGrow(e.target);
+              }}
             />
             <Button type="submit" variant="primary">
               Send
@@ -174,10 +201,18 @@ function Chat({ matchId, partnerLabel, currentUserId, onClose }) {
                     >
                       <Field
                         id={`edit-${message._id}`}
+                        as="textarea"
+                        rows={2}
                         label="Edit your message"
+                        hint="Enter saves, Shift+Enter starts a new line."
                         value={editText}
                         autoComplete="off"
-                        onChange={(e) => setEditText(e.target.value)}
+                        className={styles.editInput}
+                        onKeyDown={(e) => handleEditKeyDown(e, message._id)}
+                        onChange={(e) => {
+                          setEditText(e.target.value);
+                          autoGrow(e.target);
+                        }}
                       />
                       <div className={styles.editActions}>
                         <Button type="submit" variant="primary" size="sm">

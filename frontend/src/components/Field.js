@@ -21,6 +21,7 @@ function Field({
   error,
   required = false,
   labelHidden = false,
+  className = "",
   children,
   ...control
 }) {
@@ -36,7 +37,8 @@ function Field({
     ...control,
     id,
     required,
-    className: styles.control,
+    // Callers can add to the base control styling, not replace it.
+    className: [styles.control, className].filter(Boolean).join(" "),
     "aria-describedby": describedBy,
     "aria-invalid": error ? true : undefined,
   };
@@ -79,6 +81,7 @@ Field.propTypes = {
   error: PropTypes.string,
   required: PropTypes.bool,
   labelHidden: PropTypes.bool,
+  className: PropTypes.string,
   children: PropTypes.node,
 };
 

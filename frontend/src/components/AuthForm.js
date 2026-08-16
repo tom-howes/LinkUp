@@ -28,6 +28,7 @@ function AuthForm({ onAuth }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("seeker");
+  const [companyName, setCompanyName] = useState("");
   const [fieldErrors, setFieldErrors] = useState({});
   const [error, setError] = useState("");
   const [busy, setBusy] = useState(false);
@@ -61,6 +62,9 @@ function AuthForm({ onAuth }) {
     } else if (isRegister && password.length < 8) {
       errors.password = "Choose a password of at least 8 characters.";
     }
+    if (isRegister && role === "employer" && !companyName.trim()) {
+      errors.companyName = "Enter the company name jobseekers will see.";
+    }
     return errors;
   }
 
@@ -75,7 +79,12 @@ function AuthForm({ onAuth }) {
     setBusy(true);
     try {
       const user = isRegister
-        ? await api.register({ email: email.trim(), password, role })
+        ? await api.register({
+            email: email.trim(),
+            password,
+            role,
+            ...(role === "employer" ? { companyName: companyName.trim() } : {}),
+          })
         : await api.login({ email: email.trim(), password });
       onAuth(user);
     } catch (err) {
@@ -187,6 +196,20 @@ function AuthForm({ onAuth }) {
                   <option value="seeker">Jobseeker - looking for a role</option>
                   <option value="employer">Employer - hiring for a role</option>
                 </Field>
+              )}
+
+              {isRegister && role === "employer" && (
+                <Field
+                  id="auth-company"
+                  label="Company name"
+                  value={companyName}
+                  required
+                  autoComplete="organization"
+                  placeholder="e.g. Northwind Robotics"
+                  hint="Shown on every posting you publish, so jobseekers know who they are talking to."
+                  error={fieldErrors.companyName}
+                  onChange={(e) => setCompanyName(e.target.value)}
+                />
               )}
 
               <StatusMessage tone="error">{error}</StatusMessage>

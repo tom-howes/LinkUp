@@ -104,3 +104,25 @@
   flex: 1;
   min-width: 0;
 }
+
+/* The composer starts one line tall and grows with the message (see
+   utils/autoGrow.js), so a long message is fully readable while it is being
+   written instead of scrolling sideways in a single-line box. */
+/* textarea.x rather than .x: Field's own `textarea.control { min-height: 6rem }`
+   is element+class, so a bare class selector here would lose to it. */
+textarea.composerInput {
+  min-height: var(--tap-target);
+  height: var(--tap-target);
+  padding-top: var(--space-3);
+  line-height: var(--lh-snug);
+  resize: none;
+  overflow-y: hidden;
+}
+
+/* Same treatment when editing a message already in the thread. */
+textarea.editInput {
+  min-height: 3.5rem;
+  line-height: var(--lh-snug);
+  resize: none;
+  overflow-y: hidden;
+}

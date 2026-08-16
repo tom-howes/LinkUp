@@ -11,6 +11,15 @@ import styles from "./ProfileEditor.module.css";
 
 const MAX_SKILLS = 3;
 
+/** What the form looks like when it exactly matches the saved profile. */
+function savedShape(user) {
+  return JSON.stringify({
+    desiredTitle: user.desiredTitle || "",
+    skills: user.skills || [],
+    companyName: user.companyName || "",
+  });
+}
+
 /**
  * Profile screen. Jobseekers set one desired title plus up to 3 evidenced
  * skills; employers set the company name shown on their postings.
@@ -20,6 +29,9 @@ const MAX_SKILLS = 3;
  * near-miss silently produced zero matches. The title field is now backed by a
  * datalist of the titles employers are actually hiring for, and the hint says
  * the match is exact.
+ *
+ * The screen also tracks whether the form differs from the saved profile, so
+ * it can say plainly whether there is anything left to save.
  */
 function ProfileEditor({ user, onSaved, onAccountDeleted, titleSuggestions = [] }) {
   const isSeeker = user.role === "seeker";
@@ -37,6 +49,13 @@ function ProfileEditor({ user, onSaved, onAccountDeleted, titleSuggestions = [] 
     setSkills(user.skills || []);
     setCompanyName(user.companyName || "");
   }, [user]);
+
+  // Every participant asked some version of "is this saved?". Comparing the
+  // form against the stored profile lets the screen answer that directly,
+  // rather than leaving an always-enabled Save button that gives no clue
+  // whether it still needs pressing.
+  const isDirty =
+    savedShape(user) !== JSON.stringify({ desiredTitle, skills, companyName });
 
   function updateSkill(index, next) {
     setSkills((prev) => prev.map((s, i) => (i === index ? next : s)));
@@ -107,9 +126,14 @@ function ProfileEditor({ user, onSaved, onAccountDeleted, titleSuggestions = [] 
             : "Your company name appears on every posting you publish."
         }
         action={
-          <Button type="submit" variant="primary" disabled={busy}>
-            {busy ? "Saving..." : "Save profile"}
-          </Button>
+          <div className={styles.headerState}>
+            <p className={isDirty ? styles.stateDirty : styles.stateSaved} role="status">
+              {isDirty ? "Unsaved changes" : "All changes saved"}
+            </p>
+            <Button type="submit" variant="primary" disabled={busy || !isDirty}>
+              {busy ? "Saving..." : "Save profile"}
+            </Button>
+          </div>
         }
       />
 
@@ -194,6 +218,31 @@ function ProfileEditor({ user, onSaved, onAccountDeleted, titleSuggestions = [] 
         <StatusMessage tone="error">{error}</StatusMessage>
         <StatusMessage tone="success">{status}</StatusMessage>
       </div>
+
+      {/* The skills list pushes Save off the top of a short window, so it
+          follows you down the page while there is something to save. */}
+      {isDirty && (
+        <div className={styles.saveBar}>
+          <p className={styles.saveBarText}>You have unsaved changes.</p>
+          <div className={styles.saveBarActions}>
+            <Button
+              variant="secondary"
+              onClick={() => {
+                setDesiredTitle(user.desiredTitle || "");
+                setSkills(user.skills || []);
+                setCompanyName(user.companyName || "");
+                setError("");
+                setStatus("");
+              }}
+            >
+              Discard changes
+            </Button>
+            <Button type="submit" variant="primary" disabled={busy}>
+              {busy ? "Saving..." : "Save profile"}
+            </Button>
+          </div>
+        </div>
+      )}
 
       <section className={styles.dangerZone} aria-labelledby="danger-heading">
         <h2 id="danger-heading" className={styles.dangerTitle}>

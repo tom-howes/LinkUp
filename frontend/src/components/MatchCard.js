@@ -65,9 +65,21 @@ function MatchCard({ match, viewerRole, onUpdate, onDelete, onOpenChat }) {
         </div>
 
         <p className={styles.meta}>
-          {isSeekerView
-            ? posting.location || "Location not given"
-            : `Candidate for your posting "${posting.title || "a deleted posting"}"`}
+          {isSeekerView ? (
+            <>
+              {/* Who the employer is, not just where the job is - a seeker
+                  deciding whether to unlock a chat needs to know that. */}
+              <span className={styles.company}>
+                {posting.poster?.companyName || "Company not given"}
+              </span>
+              <span>{posting.location || "Location not given"}</span>
+            </>
+          ) : (
+            <span>
+              Candidate for your posting &quot;{posting.title || "a deleted posting"}
+              &quot;
+            </span>
+          )}
         </p>
 
         <div className={styles.matched}>
@@ -151,6 +163,9 @@ MatchCard.propTypes = {
     posting: PropTypes.shape({
       title: PropTypes.string,
       location: PropTypes.string,
+      poster: PropTypes.shape({
+        companyName: PropTypes.string,
+      }),
     }),
     seeker: PropTypes.shape({
       desiredTitle: PropTypes.string,
