@@ -74,10 +74,15 @@ router.get("/mine", requireAuth, async (req, res) => {
       return res.status(403).json({ error: "Employers only" });
     }
     const db = getDB();
+    // Same shape as the public list, poster included, so a posting card renders
+    // identically wherever it appears.
     const postings = await db
       .collection("postings")
-      .find({ posterId: req.user._id })
-      .sort({ createdAt: -1 })
+      .aggregate([
+        { $match: { posterId: req.user._id } },
+        { $sort: { createdAt: -1 } },
+        ...withPoster,
+      ])
       .toArray();
     res.json(postings);
   } catch (err) {
@@ -107,6 +112,14 @@ router.post("/", requireAuth, async (req, res) => {
     if (req.user.role !== "employer") {
       return res.status(403).json({ error: "Employers only" });
     }
+    // Legacy accounts predate the company-name requirement, so guard here too
+    // rather than letting an anonymous posting reach jobseekers.
+    if (!String(req.user.companyName || "").trim()) {
+      return res.status(400).json({
+        error: "Add your company name on the Profile page before publishing a posting",
+      });
+    }
+
     const title = String(req.body.title || "").trim();
     if (!title) return res.status(400).json({ error: "Title is required" });
 

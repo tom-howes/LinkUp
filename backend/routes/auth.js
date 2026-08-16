@@ -15,6 +15,11 @@ router.post("/register", async (req, res) => {
     if (!["seeker", "employer"].includes(role)) {
       return res.status(400).json({ error: "role must be seeker or employer" });
     }
+    // Jobseekers should always know who they are matching with, so an employer
+    // account cannot exist without a company name.
+    if (role === "employer" && !String(companyName || "").trim()) {
+      return res.status(400).json({ error: "Company name is required" });
+    }
     const db = getDB();
     const existing = await db.collection("users").findOne({ email });
     if (existing) return res.status(409).json({ error: "Email already in use" });
@@ -30,7 +35,7 @@ router.post("/register", async (req, res) => {
       doc.desiredTitle = desiredTitle || "";
       doc.skills = [];
     } else {
-      doc.companyName = companyName || "";
+      doc.companyName = String(companyName).trim();
     }
 
     const result = await db.collection("users").insertOne(doc);

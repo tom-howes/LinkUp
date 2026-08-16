@@ -33,7 +33,10 @@ function PostingCard({ posting, isOwner, onEdit, onToggleStatus, onDelete }) {
         </div>
 
         <p className={styles.meta}>
-          {company && <span className={styles.company}>{company}</span>}
+          {/* Always name the hiring company. A card that just said "Frontend
+              Developer" gave jobseekers no idea who they would be talking to,
+              so an unnamed employer is now called out rather than omitted. */}
+          <span className={styles.company}>{company || "Company not given"}</span>
           <span>{posting.location || "Location not given"}</span>
         </p>
 

@@ -161,10 +161,25 @@ router.get("/mine", requireAuth, async (req, res) => {
             as: "seeker",
           },
         },
+        // The hiring company, so a seeker's match card can name who posted the
+        // job rather than showing the title alone.
+        {
+          $lookup: {
+            from: "users",
+            localField: "posterId",
+            foreignField: "_id",
+            as: "poster",
+          },
+        },
         { $unwind: { path: "$posting", preserveNullAndEmptyArrays: true } },
         { $unwind: { path: "$seeker", preserveNullAndEmptyArrays: true } },
+        { $unwind: { path: "$poster", preserveNullAndEmptyArrays: true } },
+        // Carry the company onto the posting, so posting.poster.companyName
+        // means the same thing here as it does on a browse result.
+        { $set: { "posting.poster": { companyName: "$poster.companyName" } } },
         {
           $project: {
+            poster: 0,
             "seeker.password": 0,
             "seeker.email": 0,
           },

@@ -44,7 +44,11 @@ router.put("/me", requireAuth, async (req, res) => {
       }
     } else {
       if (typeof req.body.companyName === "string") {
-        update.companyName = req.body.companyName;
+        const name = req.body.companyName.trim();
+        // An employer cannot blank this out - it is what identifies them on
+        // every posting and match a jobseeker sees.
+        if (!name) return res.status(400).json({ error: "Company name is required" });
+        update.companyName = name;
       }
     }
 

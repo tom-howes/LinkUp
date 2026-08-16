@@ -88,3 +88,73 @@
     align-items: stretch;
   }
 }
+
+/* ------------------------------------------------- save state and save bar */
+
+.headerState {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--space-2);
+}
+
+.stateDirty,
+.stateSaved {
+  margin: 0;
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semibold);
+  letter-spacing: var(--ls-overline);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.stateDirty {
+  color: var(--c-warn-700);
+}
+
+.stateSaved {
+  color: var(--c-success-700);
+}
+
+/* Sticks to the bottom of the viewport while there is something to save, so
+   the action is never scrolled out of reach on a long profile. */
+.saveBar {
+  position: sticky;
+  bottom: var(--space-4);
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--c-warn-200);
+  border-radius: var(--radius-md);
+  background-color: var(--c-warn-50);
+  box-shadow: var(--shadow-md);
+}
+
+.saveBarText {
+  margin: 0;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-medium);
+  color: var(--c-warn-700);
+}
+
+.saveBarActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+@media (max-width: 40rem) {
+  .headerState {
+    align-items: stretch;
+  }
+
+  .stateDirty,
+  .stateSaved {
+    text-align: left;
+  }
+}
